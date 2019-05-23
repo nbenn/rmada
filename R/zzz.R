@@ -2,4 +2,4 @@
 #' @useDynLib rmada
 #' @import methods Rcpp
 
-loadModule("stdVector", TRUE)
+loadModule("arma", TRUE)

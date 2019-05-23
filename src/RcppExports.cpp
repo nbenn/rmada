@@ -7,10 +7,10 @@
 using namespace Rcpp;
 
 
-RcppExport SEXP _rcpp_module_boot_stdVector();
+RcppExport SEXP _rcpp_module_boot_arma();
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rcpp_module_boot_stdVector", (DL_FUNC) &_rcpp_module_boot_stdVector, 0},
+    {"_rcpp_module_boot_arma", (DL_FUNC) &_rcpp_module_boot_arma, 0},
     {NULL, NULL, 0}
 };
 

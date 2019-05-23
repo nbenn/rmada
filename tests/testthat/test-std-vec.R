@@ -2,12 +2,9 @@ context("test-std-vec")
 
 test_that("demo test", {
 
-  v <- new(rmada:::vec)
-  data <- 1:10
-  v$assign(data)
-  v[[3]] <- v[[3]] + 1
+  col <- new(rmada:::col, 10L)
+  expect_equal(col$length, 10L)
 
-  data[[4]] <- data[[4]] + 1
-
-  expect_identical(v$as.vector(), data)
+  mat <- new(rmada:::mat, 10L, 10L)
+  expect_equal(mat$length, 100L)
 })
