@@ -1,7 +1,7 @@
 Package: rmada
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person(given = "First",
            family = "Last",
            role = c("aut", "cre"),
@@ -10,7 +10,8 @@ Description: What the package does (one paragraph).
 License: What license it uses
 Encoding: UTF-8
 LazyData: true
-LinkingTo: 
-    Rcpp
-Imports: 
-    Rcpp
+LinkingTo: Rcpp
+Imports:
+    methods,
+    Rcpp (>= 1.0.1)
+RoxygenNote: 6.1.1
