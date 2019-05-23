@@ -15,3 +15,5 @@ Imports:
     methods,
     Rcpp (>= 1.0.1)
 RoxygenNote: 6.1.1
+Suggests: 
+    testthat
