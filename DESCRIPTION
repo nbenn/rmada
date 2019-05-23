@@ -12,10 +12,13 @@ Encoding: UTF-8
 LazyData: true
 LinkingTo:
     Rcpp,
-    RcppArmadillo
+    RcppArmadillo,
+    BH
 Imports:
     methods,
-    Rcpp (>= 1.0.1)
+    Rcpp (>= 1.0.1),
+    R6,
+    assertthat
 RoxygenNote: 6.1.1
 Suggests: 
     testthat
