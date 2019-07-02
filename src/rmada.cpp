@@ -13,7 +13,8 @@ void createFile(arma::uword nrow, arma::uword ncol, std::string fileName) {
 
     std::filebuf fbuf;
     fbuf.open(fileName.c_str(), std::ios_base::out | std::ios_base::binary);
-    fbuf.pubseekpos(nrow * ncol * sizeof(double) - 1); fbuf.sputc(0);
+    fbuf.pubseekpos(nrow * ncol * sizeof(double) - 1);
+    fbuf.sputc(0);
     fbuf.close();
 
   } catch(std::exception& ex) {
