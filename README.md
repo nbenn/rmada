@@ -3,7 +3,7 @@
 [rmada](https://nbenn.github.io/rmada)
 ======================================
 
-[![Travis build status](https://travis-ci.org/nbenn/rmada.svg?branch=master)](https://travis-ci.org/nbenn/rmada) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nbenn/rmada?branch=master&svg=true)](https://ci.appveyor.com/project/nbenn/rmada)
+[![Travis build status](https://travis-ci.org/nbenn/rmada.svg?branch=master)](https://travis-ci.org/nbenn/rmada) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nbenn/rmada?branch=master&svg=true)](https://ci.appveyor.com/project/nbenn/rmada) [![Coverage status](https://codecov.io/gh/nbenn/rmada/branch/master/graph/badge.svg)](https://codecov.io/github/nbenn/rmada?branch=master)
 
 The goal of rmada is to ...
 

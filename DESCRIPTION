@@ -22,4 +22,5 @@ Imports:
     assertthat
 RoxygenNote: 6.1.1
 Suggests:
-    testthat
+    testthat,
+    covr
