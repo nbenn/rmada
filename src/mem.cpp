@@ -26,6 +26,11 @@ std::size_t SharedMemory::get_size() {
 }
 
 void SharedMemory::remove() {
+
+  if (get_address() != nullptr) {
+    detatch();
+  }
+
   mem.remove(mem.get_name());
 }
 
