@@ -14,6 +14,8 @@ knitr::opts_chunk$set(
 ```
 # [rmada](https://nbenn.github.io/rmada)
 
+[![Travis build status](https://travis-ci.org/nbenn/rmada.svg?branch=master)](https://travis-ci.org/nbenn/rmada)
+
 The goal of rmada is to ...
 
 ## Installation
