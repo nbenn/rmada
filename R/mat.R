@@ -1,4 +1,5 @@
 
+#' Some rando docs
 #' @export
 mat <- R6::R6Class(
 
