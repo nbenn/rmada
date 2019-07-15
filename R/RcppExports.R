@@ -2,22 +2,22 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 createFile <- function(nrow, ncol, fileName) {
-    invisible(.Call('_rmada_createFile', PACKAGE = 'rmada', nrow, ncol, fileName))
+    invisible(.Call(`_rmada_createFile`, nrow, ncol, fileName))
 }
 
 mapFile <- function(fileName) {
-    .Call('_rmada_mapFile', PACKAGE = 'rmada', fileName)
+    .Call(`_rmada_mapFile`, fileName)
 }
 
 createMat <- function(memory, nrow, ncol) {
-    .Call('_rmada_createMat', PACKAGE = 'rmada', memory, nrow, ncol)
+    .Call(`_rmada_createMat`, memory, nrow, ncol)
 }
 
 nRows <- function(x) {
-    .Call('_rmada_nRows', PACKAGE = 'rmada', x)
+    .Call(`_rmada_nRows`, x)
 }
 
 nCols <- function(x) {
-    .Call('_rmada_nCols', PACKAGE = 'rmada', x)
+    .Call(`_rmada_nCols`, x)
 }
 

@@ -1,5 +1,5 @@
 ^codecov\.yml$
 ^appveyor\.yml$
-^README\.Rmd$
+^README\.(Rmd|html)$
 ^\.travis\.yml$
 ^LICENSE\.md$
