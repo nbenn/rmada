@@ -65,12 +65,15 @@ BEGIN_RCPP
 END_RCPP
 }
 
+RcppExport SEXP run_testthat_tests();
+
 static const R_CallMethodDef CallEntries[] = {
     {"_rmada_createFile", (DL_FUNC) &_rmada_createFile, 3},
     {"_rmada_mapFile", (DL_FUNC) &_rmada_mapFile, 1},
     {"_rmada_createMat", (DL_FUNC) &_rmada_createMat, 3},
     {"_rmada_nRows", (DL_FUNC) &_rmada_nRows, 1},
     {"_rmada_nCols", (DL_FUNC) &_rmada_nCols, 1},
+    {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
     {NULL, NULL, 0}
 };
 

@@ -13,12 +13,11 @@ LazyData: true
 LinkingTo:
     Rcpp,
     RcppArmadillo,
-    BH
+    BH,
+    testthat
 Imports:
     methods,
     Rcpp (>= 1.0.1),
     R6,
     assertthat
 RoxygenNote: 6.1.1
-Suggests: 
-    testthat
