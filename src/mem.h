@@ -9,8 +9,9 @@ class Memory {
 
 public:
 
-  virtual void attatch() = 0;
-  virtual void detatch() = 0;
+  virtual void attach() = 0;
+  virtual void detach() = 0;
+  virtual bool is_attached() = 0;
 
   virtual void* get_address() = 0;
   virtual std::size_t get_size() = 0;
@@ -27,8 +28,9 @@ public:
 
   SharedMemory(std::string, std::size_t);
 
-  void attatch();
-  void detatch();
+  void attach();
+  void detach();
+  bool is_attached();
 
   void* get_address();
   std::size_t get_size();
