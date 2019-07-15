@@ -1,68 +1,39 @@
 
-#include <boost/interprocess/file_mapping.hpp>
-#include <boost/interprocess/mapped_region.hpp>
-#include <boost/interprocess/shared_memory_object.hpp>
+#include "mem.h"
 
 namespace bip = boost::interprocess;
-using namespace std;
 
-class Memory {
+SharedMemory::SharedMemory(std::string id, std::size_t length) :
+    mem(bip::open_or_create, id.c_str(), bip::read_write) {
 
-public:
+  mem.truncate(length);
+}
 
-  virtual void attach() = 0;
-  virtual void detach() = 0;
+void SharedMemory::attatch() {
+  map = bip::mapped_region(mem, bip::read_write);
+}
 
-  virtual void* get_address() = 0;
-  virtual size_t get_size() = 0;
+void SharedMemory::detatch() {
+  map = bip::mapped_region();
+}
 
-  virtual void remove() = 0;
+void* SharedMemory::get_address() {
+  return map.get_address();
+}
 
-  virtual void resize(size_t new_size) = 0;
+std::size_t SharedMemory::get_size() {
+  return map.get_size();
+}
 
-};
+void SharedMemory::remove() {
+  mem.remove(mem.get_name());
+}
 
-class SharedMemory: public Memory {
+void SharedMemory::resize(std::size_t new_size) {
 
-public:
-
-  SharedMemory(string id, size_t length) :
-      mem(bip::open_or_create, id.c_str(), bip::read_write) {
-    mem.truncate(length);
+  if (get_address() != nullptr) {
+    detatch();
   }
 
-  void attatch() {
-    map = bip::mapped_region(mem, bip::read_write);
-  }
-
-  void detatch() {
-    map = bip::mapped_region();
-  }
-
-  void* get_address() {
-    return map.get_address();
-  }
-
-  size_t get_size() {
-    return map.get_size();
-  }
-
-  void remove() {
-    mem.remove(mem.get_name());
-  }
-
-  void resize(size_t new_size) {
-
-    if (get_address() != nullptr) {
-      detach();
-    }
-
-    mem.truncate(new_size);
-  }
-
-private:
-
-  bip::shared_memory_object mem;
-  bip::mapped_region map;
-
-};
+  mem.truncate(new_size);
+}
