@@ -42,8 +42,7 @@ context("shared memory") {
     mem.remove();
     expect_true(mem.get_address() == nullptr);
     expect_true(mem.get_size() == 0);
-    // remove() returns false on error
-    expect_false(bip::shared_memory_object::remove("shared_memory"));
+    expect_error(mem.remove());
   }
 
 }

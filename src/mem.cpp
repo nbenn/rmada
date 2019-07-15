@@ -31,7 +31,9 @@ void SharedMemory::remove() {
     detatch();
   }
 
-  mem.remove(mem.get_name());
+  if (!mem.remove(mem.get_name())) {
+    throw std::runtime_error("Could not remove shared memory segment.");
+  }
 }
 
 void SharedMemory::resize(std::size_t new_size) {
