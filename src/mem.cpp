@@ -18,7 +18,7 @@ public:
 
   virtual void remove() = 0;
 
-  //virtual void resize(size_t new_size) = 0;
+  virtual void resize(size_t new_size) = 0;
 
 };
 
@@ -49,6 +49,15 @@ public:
 
   void remove() {
     mem.remove(mem.get_name());
+  }
+
+  void resize(size_t new_size) {
+
+    if (get_address() != nullptr) {
+      detach();
+    }
+
+    mem.truncate(new_size);
   }
 
 private:
