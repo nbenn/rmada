@@ -4,17 +4,27 @@
 namespace bip = boost::interprocess;
 namespace fs = boost::filesystem;
 
-SharedMemory::SharedMemory(std::string id, std::size_t length) :
-    mem(bip::open_or_create, id.c_str(), bip::read_write),
-    map() {
+SharedMemory::SharedMemory(std::string id, std::size_t length) {
 
-  auto curr_size = get_size();
+  try {
 
-  if (curr_size == 0 && length > 0) {
-    resize(length);
-  } else if (curr_size != length) {
-    throw std::runtime_error("Will not resize an existing shared memory "
-        "segment without explicit call to resize().");
+    mem = bip::shared_memory_object(bip::create_only, id.c_str(),
+        bip::read_write);
+    mem.truncate(length);
+
+  } catch(const bip::interprocess_exception& er) {
+
+    if (er.get_native_error() == boost::system::errc::file_exists) {
+      mem = bip::shared_memory_object(bip::open_only, id.c_str(),
+          bip::read_write);
+    } else {
+      throw;
+    }
+  }
+
+  if (get_size() != length) {
+    throw std::runtime_error("Could not set up a shared memory segment of "
+        "the requested size.");
   }
 }
 
@@ -53,7 +63,7 @@ std::size_t SharedMemory::get_size() {
         "negative.");
   }
 
-  return static_cast<std::size_t>(size);
+  return size;
 }
 
 void SharedMemory::remove() {
@@ -99,7 +109,6 @@ FileMemory::FileMemory(std::string file_path, std::size_t length) {
   }
 
   mem = bip::file_mapping(file_path.c_str(), bip::read_write);
-  map = bip::mapped_region();
 }
 
 void FileMemory::attach() {
