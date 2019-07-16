@@ -26,14 +26,22 @@ SharedMemory::SharedMemory(std::string id, std::size_t length) {
     throw std::runtime_error("Could not set up a shared memory segment of "
         "the requested size.");
   }
-}
 
-void SharedMemory::attach() {
   map = bip::mapped_region(mem, bip::read_write);
 }
 
+void SharedMemory::attach() {
+
+  if (!is_attached()) {
+    map = bip::mapped_region(mem, bip::read_write);
+  }
+}
+
 void SharedMemory::detach() {
-  map = bip::mapped_region();
+
+  if (is_attached()) {
+    map = bip::mapped_region();
+  }
 }
 
 bool SharedMemory::is_attached() {
@@ -42,9 +50,7 @@ bool SharedMemory::is_attached() {
 
 void* SharedMemory::get_address() {
 
-  if (!is_attached()) {
-    attach();
-  }
+  attach();
 
   return map.get_address();
 }
@@ -68,9 +74,7 @@ std::size_t SharedMemory::get_size() {
 
 void SharedMemory::remove() {
 
-  if (is_attached()) {
-    detach();
-  }
+  detach();
 
   if (!mem.remove(mem.get_name())) {
     throw std::runtime_error("Could not remove shared memory segment.");
@@ -81,9 +85,7 @@ void SharedMemory::remove() {
 
 void SharedMemory::resize(std::size_t new_size) {
 
-  if (is_attached()) {
-    detach();
-  }
+  detach();
 
   mem.truncate(new_size);
 }
@@ -109,14 +111,21 @@ FileMemory::FileMemory(std::string file_path, std::size_t length) {
   }
 
   mem = bip::file_mapping(file_path.c_str(), bip::read_write);
-}
-
-void FileMemory::attach() {
   map = bip::mapped_region(mem, bip::read_write);
 }
 
+void FileMemory::attach() {
+
+  if (!is_attached()) {
+    map = bip::mapped_region(mem, bip::read_write);
+  }
+}
+
 void FileMemory::detach() {
-  map = bip::mapped_region();
+
+  if (is_attached()) {
+    map = bip::mapped_region();
+  }
 }
 
 bool FileMemory::is_attached() {
@@ -125,9 +134,7 @@ bool FileMemory::is_attached() {
 
 void* FileMemory::get_address() {
 
-  if (!is_attached()) {
-    attach();
-  }
+  attach();
 
   return map.get_address();
 }
@@ -145,9 +152,7 @@ std::size_t FileMemory::get_size() {
 
 void FileMemory::remove() {
 
-  if (is_attached()) {
-    detach();
-  }
+  detach();
 
   if (!mem.remove(file_path().c_str())) {
     throw std::runtime_error("Could not remove memory mapped file.");
@@ -158,9 +163,7 @@ void FileMemory::remove() {
 
 void FileMemory::resize(std::size_t new_size) {
 
-  if (is_attached()) {
-    detach();
-  }
+  detach();
 
   fs::resize_file(file_path(), new_size);
 }
