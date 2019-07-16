@@ -54,5 +54,17 @@ context("shared memory") {
     expect_error(mem.get_size());
     expect_error(mem.remove());
   }
+}
 
+context("file backed memory") {
+
+  std::string file_name = "file_backed_memory";
+
+  struct file_remove {
+    file_remove(std::string name) : fn(name) {}
+    ~file_remove(){ bip::file_mapping::remove(fn.c_str()); }
+    std::string fn;
+  } remover(file_name);
+
+  FileMemory mem(file_name, 4096);
 }

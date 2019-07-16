@@ -4,6 +4,8 @@
 
 #include <boost/interprocess/mapped_region.hpp>
 #include <boost/interprocess/shared_memory_object.hpp>
+#include <boost/interprocess/file_mapping.hpp>
+#include <boost/filesystem.hpp>
 
 class Memory {
 
@@ -43,6 +45,32 @@ private:
 
   boost::interprocess::shared_memory_object mem;
   boost::interprocess::mapped_region map;
+
+};
+
+class FileMemory: public Memory {
+
+public:
+
+  FileMemory(std::string, std::size_t);
+
+  void attach();
+  void detach();
+  bool is_attached();
+
+  void* get_address();
+  std::size_t get_size();
+
+  void remove();
+
+  void resize(std::size_t);
+
+private:
+
+  boost::interprocess::file_mapping mem;
+  boost::interprocess::mapped_region map;
+
+  boost::filesystem::path file_path();
 
 };
 
