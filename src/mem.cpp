@@ -6,6 +6,10 @@
 #include <cstdio>
 #include <fstream>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 namespace bip = boost::interprocess;
 
 SharedMemory::SharedMemory(std::string id, std::size_t length) {
