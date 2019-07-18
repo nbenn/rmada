@@ -202,9 +202,11 @@ void resize_file(std::string file_path, std::size_t new_size) {
     throw std::runtime_error("Can not open file.");
   }
 
+  int fdesc = fileno(file)
+
 #ifdef _WIN32
 
-  HANDLE hand = static_cast<HANDLE> (&fileno(file));
+  HANDLE hand = static_cast<HANDLE> (&fdesc);
   LARGE_INTEGER size = {new_size};
 
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN)) {
@@ -217,7 +219,7 @@ void resize_file(std::string file_path, std::size_t new_size) {
 
 #else
 
-  if (ftruncate(fileno(file), new_size) != 0) {
+  if (ftruncate(fdesc, new_size) != 0) {
     throw std::runtime_error("Could not resize file.");
   }
 
