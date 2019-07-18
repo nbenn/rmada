@@ -1,8 +1,12 @@
 
 #include "mem.h"
 
+#include <boost/system/error_code.hpp>
+
+#include <cstdio>
+#include <fstream>
+
 namespace bip = boost::interprocess;
-namespace fs = boost::filesystem;
 
 SharedMemory::SharedMemory(std::string id, std::size_t length) {
 
@@ -92,20 +96,12 @@ void SharedMemory::resize(std::size_t new_size) {
 
 FileMemory::FileMemory(std::string file_path, std::size_t length) {
 
-  fs::path path(file_path);
-
-  if (fs::exists(path)) {
-    if (!fs::is_regular_file(path)) {
-      throw std::runtime_error("File path already exists, but is not a file.");
-    }
-  } else {
-    {
-      std::ofstream file(file_path);
-      fs::resize_file(file_path, length);
-    }
+  if (!file_exists(file_path)) {
+    create_file(file_path);
+    resize_file(file_path, length);
   }
 
-  if (fs::file_size(file_path) != length) {
+  if (file_size(file_path) != length) {
     throw std::runtime_error("File-size does not correspond to requested "
         "size.");
   }
@@ -141,13 +137,7 @@ void* FileMemory::get_address() {
 
 std::size_t FileMemory::get_size() {
 
-  auto size = fs::file_size(file_path());
-
-  if (size < 0) {
-    throw std::runtime_error("Could not determine file size.");
-  }
-
-  return size;
+  return file_size(file_path());
 }
 
 void FileMemory::remove() {
@@ -165,9 +155,52 @@ void FileMemory::resize(std::size_t new_size) {
 
   detach();
 
-  fs::resize_file(file_path(), new_size);
+  resize_file(file_path(), new_size);
 }
 
-fs::path FileMemory::file_path() {
-  return fs::path(mem.get_name());
+std::string FileMemory::file_path() {
+  return std::string(mem.get_name());
+}
+
+bool file_exists(std::string file_path) {
+  return std::ifstream(file_path).good();
+}
+
+std::size_t file_size(std::string file_path) {
+
+  std::ifstream file(file_path, std::ios::ate | std::ios::binary);
+
+  if (!std::ifstream(file_path).good()) {
+    throw std::runtime_error("Can not determine file size.");
+  }
+
+  return file.tellg();
+}
+
+void create_file(std::string file_path) {
+
+  if (file_exists(file_path)) {
+    throw std::runtime_error("File already exists.");
+  }
+
+  std::ofstream outfile(file_path);
+}
+
+void resize_file(std::string file_path, std::size_t new_size) {
+
+  if (!file_exists(file_path)) {
+    throw std::runtime_error("Can not resize non existing file.");
+  }
+
+  auto file = std::fopen(file_path.c_str(), "r+");
+
+  if (!file) {
+    throw std::runtime_error("Can not open file.");
+  }
+
+  if (ftruncate(fileno(file), new_size) != 0) {
+    throw std::runtime_error("Could not resize file.");
+  }
+
+  std::fclose(file);
 }

@@ -5,7 +5,6 @@
 #include <boost/interprocess/mapped_region.hpp>
 #include <boost/interprocess/shared_memory_object.hpp>
 #include <boost/interprocess/file_mapping.hpp>
-#include <boost/filesystem.hpp>
 
 class Memory {
 
@@ -70,8 +69,13 @@ private:
   boost::interprocess::file_mapping mem;
   boost::interprocess::mapped_region map;
 
-  boost::filesystem::path file_path();
+  std::string file_path();
 
 };
+
+bool file_exists(std::string);
+std::size_t file_size(std::string);
+void create_file(std::string);
+void resize_file(std::string, std::size_t);
 
 #endif /* RMADA_MEM_H */
