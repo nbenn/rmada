@@ -209,12 +209,16 @@ void resize_file(std::string file_path, std::size_t new_size) {
   HANDLE hand = static_cast<HANDLE> (&fdesc);
   LARGE_INTEGER size = {new_size};
 
-  if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN)) {
-    throw std::runtime_error("Could not set file size.");
+  if (SetFilePointerEx(hand, size, NULL, FILE_BEGIN) == 0) {
+    DWORD dwErrVal = GetLastError();
+    std::error_code ec (dwErrVal, std::system_category());
+    throw std::system_error(ec, "Exception occurred");
   }
 
   if (!SetEndOfFile(hand)) {
-    throw std::runtime_error("Could not resize file.");
+    DWORD dwErrVal = GetLastError();
+    std::error_code ec (dwErrVal, std::system_category());
+    throw std::system_error(ec, "Exception occurred");
   }
 
 #else
