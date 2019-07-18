@@ -202,7 +202,7 @@ void resize_file(std::string file_path, std::size_t new_size) {
     throw std::runtime_error("Can not open file.");
   }
 
-  int fdesc = fileno(file)
+  int fdesc = fileno(file);
 
 #ifdef _WIN32
 
