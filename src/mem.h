@@ -15,11 +15,11 @@ public:
   virtual bool is_attached() = 0;
 
   virtual void* get_address() = 0;
-  virtual std::size_t get_size() = 0;
+  virtual uintmax_t get_size() = 0;
 
   virtual void remove() = 0;
 
-  virtual void resize(std::size_t) = 0;
+  virtual void resize(uintmax_t) = 0;
 
 };
 
@@ -27,18 +27,18 @@ class SharedMemory: public Memory {
 
 public:
 
-  SharedMemory(std::string, std::size_t);
+  SharedMemory(std::string, uintmax_t);
 
   void attach();
   void detach();
   bool is_attached();
 
   void* get_address();
-  std::size_t get_size();
+  uintmax_t get_size();
 
   void remove();
 
-  void resize(std::size_t);
+  void resize(uintmax_t);
 
 private:
 
@@ -51,18 +51,18 @@ class FileMemory: public Memory {
 
 public:
 
-  FileMemory(std::string, std::size_t);
+  FileMemory(std::string, uintmax_t);
 
   void attach();
   void detach();
   bool is_attached();
 
   void* get_address();
-  std::size_t get_size();
+  uintmax_t get_size();
 
   void remove();
 
-  void resize(std::size_t);
+  void resize(uintmax_t);
 
 private:
 
@@ -74,8 +74,8 @@ private:
 };
 
 bool file_exists(std::string);
-std::size_t file_size(std::string);
+uintmax_t file_size(std::string);
 void create_file(std::string);
-void resize_file(std::string, std::size_t);
+void resize_file(std::string, uintmax_t);
 
 #endif /* RMADA_MEM_H */

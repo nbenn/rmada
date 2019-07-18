@@ -13,7 +13,7 @@
 
 namespace bip = boost::interprocess;
 
-SharedMemory::SharedMemory(std::string id, std::size_t length) {
+SharedMemory::SharedMemory(std::string id, uintmax_t length) {
 
   try {
 
@@ -64,7 +64,7 @@ void* SharedMemory::get_address() {
   return map.get_address();
 }
 
-std::size_t SharedMemory::get_size() {
+uintmax_t SharedMemory::get_size() {
 
   bip::offset_t size;
 
@@ -92,14 +92,14 @@ void SharedMemory::remove() {
   mem = bip::shared_memory_object();
 }
 
-void SharedMemory::resize(std::size_t new_size) {
+void SharedMemory::resize(uintmax_t new_size) {
 
   detach();
 
   mem.truncate(new_size);
 }
 
-FileMemory::FileMemory(std::string file_path, std::size_t length) {
+FileMemory::FileMemory(std::string file_path, uintmax_t length) {
 
   if (!file_exists(file_path)) {
     create_file(file_path);
@@ -140,7 +140,7 @@ void* FileMemory::get_address() {
   return map.get_address();
 }
 
-std::size_t FileMemory::get_size() {
+uintmax_t FileMemory::get_size() {
 
   return file_size(file_path());
 }
@@ -156,7 +156,7 @@ void FileMemory::remove() {
   mem = bip::file_mapping();
 }
 
-void FileMemory::resize(std::size_t new_size) {
+void FileMemory::resize(uintmax_t new_size) {
 
   detach();
 
@@ -171,7 +171,7 @@ bool file_exists(std::string file_path) {
   return std::ifstream(file_path).good();
 }
 
-std::size_t file_size(std::string file_path) {
+uintmax_t file_size(std::string file_path) {
 
   std::ifstream file(file_path, std::ios::ate | std::ios::binary);
 
@@ -191,7 +191,7 @@ void create_file(std::string file_path) {
   std::ofstream outfile(file_path);
 }
 
-void resize_file(std::string file_path, std::size_t new_size) {
+void resize_file(std::string file_path, uintmax_t new_size) {
 
   if (!file_exists(file_path)) {
     throw std::runtime_error("Will not resize non existing file.");
