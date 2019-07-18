@@ -203,10 +203,12 @@ void resize_file(std::string file_path, std::size_t new_size) {
   }
 
 #ifdef _WIN32
-  if (!SetFilePointerEx(fileno(file), new_size, NULL, FILE_BEGIN)) {
+  HANDLE hand = static_cast<HANDLE> (fileno(file));
+  LARGE_INTEGER size = {new_size};
+  if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN)) {
     throw std::runtime_error("Could not set file size.");
   }
-  if (!SetEndOfFile(fileno(file))) {
+  if (!SetEndOfFile(hand)) {
     throw std::runtime_error("Could not resize file.");
   }
 #else
