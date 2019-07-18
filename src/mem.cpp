@@ -8,6 +8,7 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <io.h>
 #endif
 
 namespace bip = boost::interprocess;
@@ -202,11 +203,9 @@ void resize_file(std::string file_path, std::size_t new_size) {
     throw std::runtime_error("Can not open file.");
   }
 
-  int fdesc = fileno(file);
-
 #ifdef _WIN32
 
-  HANDLE hand = static_cast<HANDLE> (_get_osfhandle(fdesc));
+  HANDLE hand = static_cast<HANDLE> (_get_osfhandle(_fileno(fdesc)));
   LARGE_INTEGER size = {new_size};
 
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
@@ -219,7 +218,7 @@ void resize_file(std::string file_path, std::size_t new_size) {
 
 #else
 
-  if (ftruncate(fdesc, new_size) != 0) {
+  if (ftruncate(fileno(file), new_size) != 0) {
     throw std::runtime_error("Could not resize file.");
   }
 
