@@ -206,16 +206,12 @@ void resize_file(std::string file_path, std::size_t new_size) {
 
 #ifdef _WIN32
 
-  HANDLE hand = static_cast<HANDLE> (&fdesc);
+  HANDLE hand = static_cast<HANDLE> (_get_osfhandle(fdesc));
   LARGE_INTEGER size = {new_size};
 
-  if (SetFilePointerEx(hand, size, NULL, FILE_BEGIN) == 0) {
-    DWORD dwErrVal = GetLastError();
-    std::error_code ec (dwErrVal, std::system_category());
-    throw std::system_error(ec, "Exception occurred");
-  }
+  if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
+      !SetEndOfFile(hand)) {
 
-  if (!SetEndOfFile(hand)) {
     DWORD dwErrVal = GetLastError();
     std::error_code ec (dwErrVal, std::system_category());
     throw std::system_error(ec, "Exception occurred");
