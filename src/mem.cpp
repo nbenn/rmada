@@ -198,9 +198,18 @@ void resize_file(std::string file_path, std::size_t new_size) {
     throw std::runtime_error("Can not open file.");
   }
 
+#ifdef _WIN32
+  if (!SetFilePointerEx(fileno(file), new_size, NULL, FILE_BEGIN)) {
+    throw std::runtime_error("Could not set file size.");
+  }
+  if (!SetEndOfFile(fileno(file))) {
+    throw std::runtime_error("Could not resize file.");
+  }
+#else
   if (ftruncate(fileno(file), new_size) != 0) {
     throw std::runtime_error("Could not resize file.");
   }
+#endif
 
   std::fclose(file);
 }
