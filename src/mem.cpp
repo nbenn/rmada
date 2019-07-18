@@ -200,7 +200,8 @@ void resize_file(std::string file_path, std::size_t new_size) {
   auto file = std::fopen(file_path.c_str(), "r+");
 
   if (!file) {
-    throw std::runtime_error("Can not open file.");
+    std::error_code ec(errno, std::system_category());
+    throw std::system_error(ec, "Exception occurred opening file");
   }
 
 #ifdef _WIN32
@@ -211,15 +212,16 @@ void resize_file(std::string file_path, std::size_t new_size) {
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
       !SetEndOfFile(hand)) {
 
-    DWORD dwErrVal = GetLastError();
-    std::error_code ec (dwErrVal, std::system_category());
-    throw std::system_error(ec, "Exception occurred");
+    DWORD err_val = GetLastError();
+    std::error_code ec(err_val, std::system_category());
+    throw std::system_error(ec, "Exception occurred resizing file");
   }
 
 #else
 
   if (ftruncate(fileno(file), new_size) != 0) {
-    throw std::runtime_error("Could not resize file.");
+    std::error_code ec(errno, std::system_category());
+    throw std::system_error(ec, "Exception occurred resizing file");
   }
 
 #endif
