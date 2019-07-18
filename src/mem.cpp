@@ -205,7 +205,7 @@ void resize_file(std::string file_path, std::size_t new_size) {
 
 #ifdef _WIN32
 
-  HANDLE hand = static_cast<HANDLE> (_get_osfhandle(_fileno(fdesc)));
+  HANDLE hand = static_cast<HANDLE> (_get_osfhandle(_fileno(file)));
   LARGE_INTEGER size = {new_size};
 
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
