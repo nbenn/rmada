@@ -193,7 +193,7 @@ void create_file(std::string file_path) {
 void resize_file(std::string file_path, std::size_t new_size) {
 
   if (!file_exists(file_path)) {
-    throw std::runtime_error("Can not resize non existing file.");
+    throw std::runtime_error("Will not resize non existing file.");
   }
 
   auto file = std::fopen(file_path.c_str(), "r+");
@@ -203,18 +203,24 @@ void resize_file(std::string file_path, std::size_t new_size) {
   }
 
 #ifdef _WIN32
-  HANDLE hand = static_cast<HANDLE> (fileno(file));
+
+  HANDLE hand = static_cast<HANDLE> (&fileno(file));
   LARGE_INTEGER size = {new_size};
+
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN)) {
     throw std::runtime_error("Could not set file size.");
   }
+
   if (!SetEndOfFile(hand)) {
     throw std::runtime_error("Could not resize file.");
   }
+
 #else
+
   if (ftruncate(fileno(file), new_size) != 0) {
     throw std::runtime_error("Could not resize file.");
   }
+
 #endif
 
   std::fclose(file);
