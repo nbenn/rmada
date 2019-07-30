@@ -5,3 +5,31 @@ init_mem <- function(name, length, data_type, mem_type) {
     .Call(`_rmada_init_mem`, name, length, data_type, mem_type)
 }
 
+attach <- function(mem) {
+    invisible(.Call(`_rmada_attach`, mem))
+}
+
+detach <- function(mem) {
+    invisible(.Call(`_rmada_detach`, mem))
+}
+
+is_attached <- function(mem) {
+    .Call(`_rmada_is_attached`, mem)
+}
+
+get_address <- function(mem, data_type) {
+    .Call(`_rmada_get_address`, mem, data_type)
+}
+
+get_size <- function(mem, data_type) {
+    .Call(`_rmada_get_size`, mem, data_type)
+}
+
+remove <- function(mem) {
+    invisible(.Call(`_rmada_remove`, mem))
+}
+
+resize <- function(mem, length, data_type) {
+    invisible(.Call(`_rmada_resize`, mem, length, data_type))
+}
+
