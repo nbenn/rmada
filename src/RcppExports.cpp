@@ -6,61 +6,17 @@
 
 using namespace Rcpp;
 
-// createFile
-void createFile(arma::uword nrow, arma::uword ncol, std::string fileName);
-RcppExport SEXP _rmada_createFile(SEXP nrowSEXP, SEXP ncolSEXP, SEXP fileNameSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::uword >::type nrow(nrowSEXP);
-    Rcpp::traits::input_parameter< arma::uword >::type ncol(ncolSEXP);
-    Rcpp::traits::input_parameter< std::string >::type fileName(fileNameSEXP);
-    createFile(nrow, ncol, fileName);
-    return R_NilValue;
-END_RCPP
-}
-// mapFile
-SEXP mapFile(std::string fileName);
-RcppExport SEXP _rmada_mapFile(SEXP fileNameSEXP) {
+// init_mem
+SEXP init_mem(std::string name, std::size_t length, int data_type, std::string mem_type);
+RcppExport SEXP _rmada_init_mem(SEXP nameSEXP, SEXP lengthSEXP, SEXP data_typeSEXP, SEXP mem_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type fileName(fileNameSEXP);
-    rcpp_result_gen = Rcpp::wrap(mapFile(fileName));
-    return rcpp_result_gen;
-END_RCPP
-}
-// createMat
-SEXP createMat(SEXP memory, arma::uword nrow, arma::uword ncol);
-RcppExport SEXP _rmada_createMat(SEXP memorySEXP, SEXP nrowSEXP, SEXP ncolSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type memory(memorySEXP);
-    Rcpp::traits::input_parameter< arma::uword >::type nrow(nrowSEXP);
-    Rcpp::traits::input_parameter< arma::uword >::type ncol(ncolSEXP);
-    rcpp_result_gen = Rcpp::wrap(createMat(memory, nrow, ncol));
-    return rcpp_result_gen;
-END_RCPP
-}
-// nRows
-arma::uword nRows(SEXP x);
-RcppExport SEXP _rmada_nRows(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(nRows(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// nCols
-arma::uword nCols(SEXP x);
-RcppExport SEXP _rmada_nCols(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(nCols(x));
+    Rcpp::traits::input_parameter< std::string >::type name(nameSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type length(lengthSEXP);
+    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
+    Rcpp::traits::input_parameter< std::string >::type mem_type(mem_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(init_mem(name, length, data_type, mem_type));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -68,11 +24,7 @@ END_RCPP
 RcppExport SEXP run_testthat_tests();
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_rmada_createFile", (DL_FUNC) &_rmada_createFile, 3},
-    {"_rmada_mapFile", (DL_FUNC) &_rmada_mapFile, 1},
-    {"_rmada_createMat", (DL_FUNC) &_rmada_createMat, 3},
-    {"_rmada_nRows", (DL_FUNC) &_rmada_nRows, 1},
-    {"_rmada_nCols", (DL_FUNC) &_rmada_nCols, 1},
+    {"_rmada_init_mem", (DL_FUNC) &_rmada_init_mem, 4},
     {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
     {NULL, NULL, 0}
 };
