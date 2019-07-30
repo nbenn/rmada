@@ -101,7 +101,7 @@ void SharedMemory::resize(uintmax_t new_size) {
 
 FileMemory::FileMemory(std::string file_path, uintmax_t length) {
 
-  if (!file_exists(file_path)) {
+  if (!file_is_accessible(file_path)) {
     create_file(file_path);
     resize_file(file_path, length);
   }
@@ -167,7 +167,7 @@ std::string FileMemory::file_path() {
   return std::string(mem.get_name());
 }
 
-bool file_exists(std::string file_path) {
+bool file_is_accessible(std::string file_path) {
   return std::ifstream(file_path).good();
 }
 
@@ -184,7 +184,7 @@ uintmax_t file_size(std::string file_path) {
 
 void create_file(std::string file_path) {
 
-  if (file_exists(file_path)) {
+  if (file_is_accessible(file_path)) {
     throw std::runtime_error("File already exists.");
   }
 
@@ -193,8 +193,8 @@ void create_file(std::string file_path) {
 
 void resize_file(std::string file_path, uintmax_t new_size) {
 
-  if (!file_exists(file_path)) {
-    throw std::runtime_error("Will not resize non existing file.");
+  if (!file_is_accessible(file_path)) {
+    throw std::runtime_error("Will not resize inaccessible file.");
   }
 
   auto file = std::fopen(file_path.c_str(), "r+");

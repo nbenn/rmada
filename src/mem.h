@@ -21,6 +21,7 @@ public:
 
   virtual void resize(uintmax_t) = 0;
 
+  virtual ~Memory() {}
 };
 
 class SharedMemory: public Memory {
@@ -73,7 +74,7 @@ private:
 
 };
 
-bool file_exists(std::string);
+bool file_is_accessible(std::string);
 uintmax_t file_size(std::string);
 void create_file(std::string);
 void resize_file(std::string, uintmax_t);
