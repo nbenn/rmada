@@ -2,8 +2,10 @@
 
 S3method(dim,mat)
 export(mat)
+export(obj)
 import(Rcpp)
 import(methods)
 importFrom(assertthat,assert_that)
 importFrom(assertthat,is.count)
+importFrom(assertthat,is.string)
 useDynLib(rmada, .registration = TRUE)

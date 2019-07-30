@@ -35,63 +35,63 @@ SEXP init_mem(std::string name, std::size_t length, int data_type,
 }
 
 // [[Rcpp::export]]
-void attach(Rcpp::XPtr<Memory> mem) {
+void mem_attach(Rcpp::XPtr<Memory> mem) {
   mem->attach();
 }
 
 // [[Rcpp::export]]
-void detach(Rcpp::XPtr<Memory> mem) {
+void mem_detach(Rcpp::XPtr<Memory> mem) {
   mem->detach();
 }
 
 // [[Rcpp::export]]
-bool is_attached(Rcpp::XPtr<Memory> mem) {
+bool is_mem_attached(Rcpp::XPtr<Memory> mem) {
   return mem->is_attached();
 }
 
 template <typename T>
-SEXP get_address(Rcpp::XPtr<Memory> mem) {
+SEXP get_mem_address(Rcpp::XPtr<Memory> mem) {
   T* res = static_cast<T*>(mem->get_address());
   return Rcpp::XPtr<T>(res, false);
 }
 
-#define GET_ADDRESS(TYPE) return get_address<TYPE>(mem);
+#define GET_MEM_ADDRESS(TYPE) return get_mem_address<TYPE>(mem);
 
 // [[Rcpp::export]]
-SEXP get_address(Rcpp::XPtr<Memory> mem, int data_type) {
-  DISPATCH_DATA_TYPE(GET_ADDRESS)
+SEXP get_mem_address(Rcpp::XPtr<Memory> mem, int data_type) {
+  DISPATCH_DATA_TYPE(GET_MEM_ADDRESS)
 }
 
 template <typename T>
-int get_size(Rcpp::XPtr<Memory> mem) {
+int get_mem_length(Rcpp::XPtr<Memory> mem) {
   return mem->get_size() / sizeof(T);
 }
 
-#define GET_SIZE(TYPE) return get_size<TYPE>(mem);
+#define GET_MEM_LENGTH(TYPE) return get_mem_length<TYPE>(mem);
 
 // [[Rcpp::export]]
-int get_size(Rcpp::XPtr<Memory> mem, int data_type) {
-  DISPATCH_DATA_TYPE(GET_SIZE)
+int get_mem_length(Rcpp::XPtr<Memory> mem, int data_type) {
+  DISPATCH_DATA_TYPE(GET_MEM_LENGTH)
 }
 
 // [[Rcpp::export]]
-std::string get_id(Rcpp::XPtr<Memory> mem) {
+std::string get_mem_id(Rcpp::XPtr<Memory> mem) {
   return mem->get_id();
 }
 
 // [[Rcpp::export]]
-void remove(Rcpp::XPtr<Memory> mem) {
+void mem_remove(Rcpp::XPtr<Memory> mem) {
   mem->remove();
 }
 
 template <typename T>
-void resize(Rcpp::XPtr<Memory> mem, std::size_t length) {
+void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t length) {
   mem->resize(length * sizeof(T));
 }
 
-#define RESIZE(TYPE) return resize<TYPE>(mem, length);
+#define MEM_RESIZE(TYPE) return mem_resize<TYPE>(mem, length);
 
 // [[Rcpp::export]]
-void resize(Rcpp::XPtr<Memory> mem, std::size_t length, int data_type) {
-  DISPATCH_DATA_TYPE(RESIZE)
+void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t length, int data_type) {
+  DISPATCH_DATA_TYPE(MEM_RESIZE)
 }

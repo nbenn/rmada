@@ -1,7 +1,7 @@
 
 #' @useDynLib rmada, .registration = TRUE
 #' @import methods Rcpp
-#' @importFrom assertthat assert_that is.count
+#' @importFrom assertthat assert_that is.count is.string
 
 # This dummy function definition is included with the package to ensure that
 # 'tools::package_native_routine_registration_skeleton()' generates the

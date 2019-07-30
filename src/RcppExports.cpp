@@ -21,91 +21,91 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// attach
-void attach(Rcpp::XPtr<Memory> mem);
-RcppExport SEXP _rmada_attach(SEXP memSEXP) {
+// mem_attach
+void mem_attach(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_mem_attach(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    attach(mem);
+    mem_attach(mem);
     return R_NilValue;
 END_RCPP
 }
-// detach
-void detach(Rcpp::XPtr<Memory> mem);
-RcppExport SEXP _rmada_detach(SEXP memSEXP) {
+// mem_detach
+void mem_detach(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_mem_detach(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    detach(mem);
+    mem_detach(mem);
     return R_NilValue;
 END_RCPP
 }
-// is_attached
-bool is_attached(Rcpp::XPtr<Memory> mem);
-RcppExport SEXP _rmada_is_attached(SEXP memSEXP) {
+// is_mem_attached
+bool is_mem_attached(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_is_mem_attached(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    rcpp_result_gen = Rcpp::wrap(is_attached(mem));
+    rcpp_result_gen = Rcpp::wrap(is_mem_attached(mem));
     return rcpp_result_gen;
 END_RCPP
 }
-// get_address
-SEXP get_address(Rcpp::XPtr<Memory> mem, int data_type);
-RcppExport SEXP _rmada_get_address(SEXP memSEXP, SEXP data_typeSEXP) {
+// get_mem_address
+SEXP get_mem_address(Rcpp::XPtr<Memory> mem, int data_type);
+RcppExport SEXP _rmada_get_mem_address(SEXP memSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
     Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_address(mem, data_type));
+    rcpp_result_gen = Rcpp::wrap(get_mem_address(mem, data_type));
     return rcpp_result_gen;
 END_RCPP
 }
-// get_size
-int get_size(Rcpp::XPtr<Memory> mem, int data_type);
-RcppExport SEXP _rmada_get_size(SEXP memSEXP, SEXP data_typeSEXP) {
+// get_mem_length
+int get_mem_length(Rcpp::XPtr<Memory> mem, int data_type);
+RcppExport SEXP _rmada_get_mem_length(SEXP memSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
     Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_size(mem, data_type));
+    rcpp_result_gen = Rcpp::wrap(get_mem_length(mem, data_type));
     return rcpp_result_gen;
 END_RCPP
 }
-// get_id
-std::string get_id(Rcpp::XPtr<Memory> mem);
-RcppExport SEXP _rmada_get_id(SEXP memSEXP) {
+// get_mem_id
+std::string get_mem_id(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_get_mem_id(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_id(mem));
+    rcpp_result_gen = Rcpp::wrap(get_mem_id(mem));
     return rcpp_result_gen;
 END_RCPP
 }
-// remove
-void remove(Rcpp::XPtr<Memory> mem);
-RcppExport SEXP _rmada_remove(SEXP memSEXP) {
+// mem_remove
+void mem_remove(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_mem_remove(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    remove(mem);
+    mem_remove(mem);
     return R_NilValue;
 END_RCPP
 }
-// resize
-void resize(Rcpp::XPtr<Memory> mem, std::size_t length, int data_type);
-RcppExport SEXP _rmada_resize(SEXP memSEXP, SEXP lengthSEXP, SEXP data_typeSEXP) {
+// mem_resize
+void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t length, int data_type);
+RcppExport SEXP _rmada_mem_resize(SEXP memSEXP, SEXP lengthSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
     Rcpp::traits::input_parameter< std::size_t >::type length(lengthSEXP);
     Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    resize(mem, length, data_type);
+    mem_resize(mem, length, data_type);
     return R_NilValue;
 END_RCPP
 }
@@ -114,14 +114,14 @@ RcppExport SEXP run_testthat_tests();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rmada_init_mem", (DL_FUNC) &_rmada_init_mem, 4},
-    {"_rmada_attach", (DL_FUNC) &_rmada_attach, 1},
-    {"_rmada_detach", (DL_FUNC) &_rmada_detach, 1},
-    {"_rmada_is_attached", (DL_FUNC) &_rmada_is_attached, 1},
-    {"_rmada_get_address", (DL_FUNC) &_rmada_get_address, 2},
-    {"_rmada_get_size", (DL_FUNC) &_rmada_get_size, 2},
-    {"_rmada_get_id", (DL_FUNC) &_rmada_get_id, 1},
-    {"_rmada_remove", (DL_FUNC) &_rmada_remove, 1},
-    {"_rmada_resize", (DL_FUNC) &_rmada_resize, 3},
+    {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},
+    {"_rmada_mem_detach", (DL_FUNC) &_rmada_mem_detach, 1},
+    {"_rmada_is_mem_attached", (DL_FUNC) &_rmada_is_mem_attached, 1},
+    {"_rmada_get_mem_address", (DL_FUNC) &_rmada_get_mem_address, 2},
+    {"_rmada_get_mem_length", (DL_FUNC) &_rmada_get_mem_length, 2},
+    {"_rmada_get_mem_id", (DL_FUNC) &_rmada_get_mem_id, 1},
+    {"_rmada_mem_remove", (DL_FUNC) &_rmada_mem_remove, 1},
+    {"_rmada_mem_resize", (DL_FUNC) &_rmada_mem_resize, 3},
     {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
     {NULL, NULL, 0}
 };

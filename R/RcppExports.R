@@ -5,35 +5,35 @@ init_mem <- function(name, length, data_type, mem_type) {
     .Call(`_rmada_init_mem`, name, length, data_type, mem_type)
 }
 
-attach <- function(mem) {
-    invisible(.Call(`_rmada_attach`, mem))
+mem_attach <- function(mem) {
+    invisible(.Call(`_rmada_mem_attach`, mem))
 }
 
-detach <- function(mem) {
-    invisible(.Call(`_rmada_detach`, mem))
+mem_detach <- function(mem) {
+    invisible(.Call(`_rmada_mem_detach`, mem))
 }
 
-is_attached <- function(mem) {
-    .Call(`_rmada_is_attached`, mem)
+is_mem_attached <- function(mem) {
+    .Call(`_rmada_is_mem_attached`, mem)
 }
 
-get_address <- function(mem, data_type) {
-    .Call(`_rmada_get_address`, mem, data_type)
+get_mem_address <- function(mem, data_type) {
+    .Call(`_rmada_get_mem_address`, mem, data_type)
 }
 
-get_size <- function(mem, data_type) {
-    .Call(`_rmada_get_size`, mem, data_type)
+get_mem_length <- function(mem, data_type) {
+    .Call(`_rmada_get_mem_length`, mem, data_type)
 }
 
-get_id <- function(mem) {
-    .Call(`_rmada_get_id`, mem)
+get_mem_id <- function(mem) {
+    .Call(`_rmada_get_mem_id`, mem)
 }
 
-remove <- function(mem) {
-    invisible(.Call(`_rmada_remove`, mem))
+mem_remove <- function(mem) {
+    invisible(.Call(`_rmada_mem_remove`, mem))
 }
 
-resize <- function(mem, length, data_type) {
-    invisible(.Call(`_rmada_resize`, mem, length, data_type))
+mem_resize <- function(mem, length, data_type) {
+    invisible(.Call(`_rmada_mem_resize`, mem, length, data_type))
 }
 
