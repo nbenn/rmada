@@ -76,6 +76,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// get_id
+std::string get_id(Rcpp::XPtr<Memory> mem);
+RcppExport SEXP _rmada_get_id(SEXP memSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_id(mem));
+    return rcpp_result_gen;
+END_RCPP
+}
 // remove
 void remove(Rcpp::XPtr<Memory> mem);
 RcppExport SEXP _rmada_remove(SEXP memSEXP) {
@@ -108,6 +119,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_is_attached", (DL_FUNC) &_rmada_is_attached, 1},
     {"_rmada_get_address", (DL_FUNC) &_rmada_get_address, 2},
     {"_rmada_get_size", (DL_FUNC) &_rmada_get_size, 2},
+    {"_rmada_get_id", (DL_FUNC) &_rmada_get_id, 1},
     {"_rmada_remove", (DL_FUNC) &_rmada_remove, 1},
     {"_rmada_resize", (DL_FUNC) &_rmada_resize, 3},
     {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},

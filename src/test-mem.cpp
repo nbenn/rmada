@@ -20,6 +20,7 @@ context("shared memory") {
     }());
     expect_true(mem.is_attached());
     expect_true(mem.get_size() == 4096);
+    expect_true(mem.get_id() == "shared_memory");
     expect_error([&](){
       SharedMemory shm("shared_memory", 8192);
     }());
@@ -71,6 +72,7 @@ context("file backed memory") {
   test_that("initialization state") {
     expect_true(mem.is_attached());
     expect_true(mem.get_size() == 4096);
+    expect_true(mem.get_id() == "file_backed_memory");
     expect_error([&](){
       FileMemory shm(file_name, 8192);
     }());

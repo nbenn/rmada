@@ -16,6 +16,7 @@ public:
 
   virtual void* get_address() = 0;
   virtual uintmax_t get_size() = 0;
+  virtual std::string get_id() = 0;
 
   virtual void remove() = 0;
 
@@ -36,6 +37,7 @@ public:
 
   void* get_address();
   uintmax_t get_size();
+  std::string get_id();
 
   void remove();
 
@@ -60,6 +62,7 @@ public:
 
   void* get_address();
   uintmax_t get_size();
+  std::string get_id();
 
   void remove();
 

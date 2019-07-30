@@ -81,6 +81,10 @@ uintmax_t SharedMemory::get_size() {
   return size;
 }
 
+std::string SharedMemory::get_id() {
+  return std::string(mem.get_name());
+}
+
 void SharedMemory::remove() {
 
   detach();
@@ -142,6 +146,10 @@ void* FileMemory::get_address() {
 
 uintmax_t FileMemory::get_size() {
   return file_size(file_path());
+}
+
+std::string FileMemory::get_id() {
+  return file_path();
 }
 
 void FileMemory::remove() {

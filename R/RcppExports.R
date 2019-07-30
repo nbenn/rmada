@@ -25,6 +25,10 @@ get_size <- function(mem, data_type) {
     .Call(`_rmada_get_size`, mem, data_type)
 }
 
+get_id <- function(mem) {
+    .Call(`_rmada_get_id`, mem)
+}
+
 remove <- function(mem) {
     invisible(.Call(`_rmada_remove`, mem))
 }

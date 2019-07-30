@@ -75,6 +75,11 @@ int get_size(Rcpp::XPtr<Memory> mem, int data_type) {
 }
 
 // [[Rcpp::export]]
+std::string get_id(Rcpp::XPtr<Memory> mem) {
+  return mem->get_id();
+}
+
+// [[Rcpp::export]]
 void remove(Rcpp::XPtr<Memory> mem) {
   mem->remove();
 }
