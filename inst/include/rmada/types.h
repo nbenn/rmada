@@ -1,8 +1,6 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include "mem.h"
-
 // idea taken from CRAN package bigstatsr
 
 #define DISPATCH_DATA_TYPE(CALL) {                                            \

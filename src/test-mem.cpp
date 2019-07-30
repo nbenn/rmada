@@ -1,6 +1,6 @@
 
 #include <testthat.h>
-#include "mem.h"
+#include <rmada/mem.h>
 
 namespace bip = boost::interprocess;
 

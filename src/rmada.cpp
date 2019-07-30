@@ -1,7 +1,8 @@
 
 #include <RcppArmadillo.h>
 
-#include "types.h"
+#include <rmada/mem.h>
+#include <rmada/types.h>
 
 template <typename DAT, typename MEM>
 SEXP init_mem(std::string name, std::size_t length) {

@@ -1,5 +1,5 @@
 
-#include "mem.h"
+#include <rmada/mem.h>
 
 #include <boost/system/error_code.hpp>
 
@@ -141,7 +141,6 @@ void* FileMemory::get_address() {
 }
 
 uintmax_t FileMemory::get_size() {
-
   return file_size(file_path());
 }
 
