@@ -13,31 +13,88 @@ obj <- R6::R6Class(
       assert_that(is.count(length), is.string(id),
                   is.count(data_type), is.string(mem_type))
 
-      private$data_type <- data_type
-      private$memory <- init_mem(id, length, data_type, mem_type)
+      private$leng <- length
+      private$name <- id
+      private$dtyp <- data_type
+      private$mtyp <- mem_type
+
+      private$init()
     },
 
-    attach = function() mem_attach(private$memory),
-    detach = function() mem_detach(private$memory),
-    is_attached = function() is_mem_attached(private$memory),
-    remove = function() mem_remove(private$memory),
+    attach = function() {
+      mem_attach(self$obj_ptr)
+      invisible(self)
+    },
+
+    detach = function() {
+      mem_detach(self$obj_ptr)
+      invisible(self)
+    },
 
     resize = function(new_length) {
-      assert_that(is.integer(new_length), length(new_length) == 1L,
-                  new_length > 0L)
-      mem_resize(private$memory, new_length, private$data_type)
+
+      assert_that(
+        is.integer(new_length), length(new_length) == 1L, new_length > 0L
+      )
+
+      private$leng <- new_length
+      mem_resize(self$obj_ptr, new_length, private$dtyp)
+
+      invisible(self)
     }
   ),
 
   active = list(
-    address = function() get_mem_address(private$memory),
-    length = function() get_mem_length(private$memory, private$data_type),
-    id = function() get_mem_id(private$memory)
+
+    obj_ptr = function() {
+
+      if (identical(methods::new("externalptr"), private$memory)) {
+        private$init()
+      }
+
+      private$memory
+    },
+
+    data_ptr = function() get_mem_address(self$obj_ptr, private$dtyp),
+
+    is_attached = function() is_mem_attached(self$obj_ptr),
+
+    length = function() {
+
+      assert_that(
+        get_mem_length(self$obj_ptr, private$dtyp) == private$leng
+      )
+
+      private$leng
+    },
+
+    id = function() {
+
+      assert_that(get_mem_id(self$obj_ptr) == private$name)
+
+      private$name
+    },
+
+    data_type = function() private$dtyp,
+    mem_type = function() private$mtyp
   ),
 
   private = list(
-    data_type = NULL,
-    memory = NULL
+
+    leng = NULL,
+    name = NULL,
+    dtyp = NULL,
+    mtyp = NULL,
+
+    memory = NULL,
+
+    init = function() {
+      private$memory <- init_mem(private$name, private$leng, private$dtyp,
+                                 private$mtyp)
+      invisible(self)
+    },
+
+    finalize = function() mem_remove(self$obj_ptr)
   )
 )
 

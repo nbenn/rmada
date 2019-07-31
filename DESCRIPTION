@@ -18,7 +18,7 @@ LinkingTo:
 Imports:
     methods,
     Rcpp (>= 1.0.1),
-    R6,
+    R6 (>= 2.4.0),
     assertthat
 RoxygenNote: 6.1.1
 Suggests:
