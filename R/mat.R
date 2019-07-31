@@ -5,71 +5,60 @@ mat <- R6::R6Class(
 
   "mat",
 
+  inherit = memory,
+
   public = list(
 
-    initialize = function(nrow, ncol, file_name = tempfile()) {
+    initialize = function(n_rows, n_cols, ...) {
 
-      assert_that(is.count(nrow), is.count(ncol), is.string(file_name))
+      assert_that(is.count(n_rows), is.count(n_cols))
 
-      private$p_file_name <- file_name
-      private$p_nrow <- nrow
-      private$p_ncol <- ncol
+      private$nrow <- n_rows
+      private$ncol <- n_cols
 
-      if (!file.exists(file_name)) {
-        createFile(nrow, ncol, private$p_file_name)
-      }
-
-      private$p_mem_ptr <- mapFile(private$p_file_name)
-      private$p_obj_ptr <- createMat(private$p_mem_ptr, nrow, ncol)
+      super$initialize(n_rows * n_cols, ...)
+      private$init_mat()
     }
   ),
 
   active = list(
 
-    nrow = function() {
-      assert_that(private$p_nrow == nRows(private$p_obj_ptr))
-      private$p_nrow
-    },
+    mat_ptr = function() {
 
-    ncol = function() {
-      assert_that(private$p_ncol == nCols(private$p_obj_ptr))
-      private$p_ncol
-    },
-
-    mem_ptr = function(value) {
-
-      assert_that(missing(value))
-
-      if (identical(private$p_mem_ptr, methods::new("externalptr"))) {
-        private$p_mem_ptr <- mapFile(private$p_file_name)
+      if (identical(methods::new("externalptr"), private$mat)) {
+        private$init_mat()
       }
 
-      private$p_mem_ptr
+      private$mat
     },
 
-    obj_ptr = function(value) {
+    n_rows = function() {
+      assert_that(private$nrow == mat_n_rows(private$mat, super$data_type))
+      private$nrow
+    },
 
-      assert_that(missing(value))
-
-      if (identical(private$p_obj_ptr, methods::new("externalptr"))) {
-        private$p_obj_ptr <- createMat(self$mem_ptr, private$p_nrow,
-                                     private$p_ncol)
-      }
-
-      private$p_obj_ptr
+    n_cols = function() {
+      assert_that(private$ncol == mat_n_cols(private$mat, super$data_type))
+      private$ncol
     }
   ),
 
   private = list(
-    p_file_name = NULL,
-    p_mem_ptr = NULL,
-    p_obj_ptr = NULL,
-    p_nrow = NULL,
-    p_ncol = NULL
+
+    nrow = NULL,
+    ncol = NULL,
+
+    mat = NULL,
+
+    init_mat = function() {
+      private$mat <- mat_init(super$mem_ptr, private$nrow, private$ncol,
+                              super$data_type)
+      invisible(self)
+    }
   )
 )
 
 #' @export
 dim.mat <- function(x) {
-  c(x$nrow, x$ncol)
+  c(x$n_rows, x$n_cols)
 }
