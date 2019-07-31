@@ -2,7 +2,7 @@
 
 S3method(dim,mat)
 export(mat)
-export(obj)
+export(memory)
 import(Rcpp)
 import(methods)
 importFrom(assertthat,assert_that)

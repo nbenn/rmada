@@ -5,10 +5,10 @@ mem_id <- "shmem_test"
 data_type <- 8L
 mem_type <- "SharedMemory"
 
-shared_mem <- obj$new(mem_len, mem_id, data_type, mem_type)
+shared_mem <- memory$new(mem_len, mem_id, data_type, mem_type)
 
 test_that("shared memory object instantiation", {
-  expect_is(shared_mem, "obj")
+  expect_is(shared_mem, "memory")
   expect_true(shared_mem$is_attached)
   expect_equal(shared_mem$length, mem_len)
   expect_equal(shared_mem$id, mem_id)
@@ -22,26 +22,26 @@ test_that("shared memory object instantiation", {
 })
 
 test_that("shared memory object de/attaching", {
-  expect_is(shared_mem$detach(), "obj")
+  expect_is(shared_mem$detach(), "memory")
   expect_false(shared_mem$is_attached)
-  expect_is(shared_mem$attach(), "obj")
+  expect_is(shared_mem$attach(), "memory")
   expect_true(shared_mem$is_attached)
 })
 
 test_that("shared memory object resizing", {
-  expect_is(shared_mem$resize(new_len), "obj")
+  expect_is(shared_mem$resize(new_len), "memory")
   expect_equal(shared_mem$length, new_len)
-  expect_is(shared_mem$resize(mem_len), "obj")
+  expect_is(shared_mem$resize(mem_len), "memory")
   expect_equal(shared_mem$length, mem_len)
 })
 
 mem_id <- tempfile()
 mem_type <- "FileMemory"
 
-file_mem <- obj$new(mem_len, mem_id, data_type, mem_type)
+file_mem <- memory$new(mem_len, mem_id, data_type, mem_type)
 
 test_that("file backed memory object instantiation", {
-  expect_is(file_mem, "obj")
+  expect_is(file_mem, "memory")
   expect_true(file_mem$is_attached)
   expect_equal(file_mem$length, mem_len)
   expect_equal(file_mem$id, mem_id)
@@ -55,15 +55,15 @@ test_that("file backed memory object instantiation", {
 })
 
 test_that("file backed memory object de/attaching", {
-  expect_is(file_mem$detach(), "obj")
+  expect_is(file_mem$detach(), "memory")
   expect_false(file_mem$is_attached)
-  expect_is(file_mem$attach(), "obj")
+  expect_is(file_mem$attach(), "memory")
   expect_true(file_mem$is_attached)
 })
 
 test_that("file backed object resizing", {
-  expect_is(file_mem$resize(new_len), "obj")
+  expect_is(file_mem$resize(new_len), "memory")
   expect_equal(file_mem$length, new_len)
-  expect_is(file_mem$resize(mem_len), "obj")
+  expect_is(file_mem$resize(mem_len), "memory")
   expect_equal(file_mem$length, mem_len)
 })

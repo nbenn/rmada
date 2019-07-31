@@ -1,9 +1,9 @@
 
 #' Some rando docs
 #' @export
-obj <- R6::R6Class(
+memory <- R6::R6Class(
 
-  "obj",
+  "memory",
 
   public = list(
 

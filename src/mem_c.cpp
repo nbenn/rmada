@@ -1,10 +1,24 @@
+// Copyright (C) 2019  Nicolas Bennett
+
+// This program is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// more details.
+
+// You should have received a copy of the GNU General Public License along
+// with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <rmada/mem.h>
 
-#include <boost/system/error_code.hpp>
-
 #include <cstdio>
 #include <fstream>
+
+#include <boost/system/error_code.hpp>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -218,7 +232,6 @@ void resize_file(std::string file_path, uintmax_t new_size) {
 
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
       !SetEndOfFile(hand)) {
-
     DWORD err_val = GetLastError();
     std::error_code ec(err_val, std::system_category());
     throw std::system_error(ec, "Exception occurred resizing file");
