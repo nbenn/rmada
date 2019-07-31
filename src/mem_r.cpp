@@ -19,18 +19,18 @@
 #include <Rcpp.h>
 
 template <typename DAT, typename MEM>
-SEXP init_mem(std::string name, std::size_t length) {
+SEXP mem_init(std::string name, std::size_t length) {
   MEM* res = new MEM(name, length * sizeof(DAT));
   return Rcpp::XPtr<MEM>(res);
 }
 
-#define INIT_SHARED_MEM(TYPE) \
-  return init_mem<TYPE, SharedMemory>(name, length);
-#define INIT_FILE_MEM(TYPE) \
-  return init_mem<TYPE, FileMemory>(name, length);
+#define SHARED_MEM_INIT(TYPE) \
+  return mem_init<TYPE, SharedMemory>(name, length);
+#define FILE_MEM_INIT(TYPE) \
+  return mem_init<TYPE, FileMemory>(name, length);
 
 // [[Rcpp::export]]
-SEXP init_mem(std::string name, std::size_t length, int data_type,
+SEXP mem_init(std::string name, std::size_t length, int data_type,
     std::string mem_type) {
 
   /*
@@ -40,9 +40,9 @@ SEXP init_mem(std::string name, std::size_t length, int data_type,
   */
 
   if (mem_type == "SharedMemory") {
-    DISPATCH_DATA_TYPE(INIT_SHARED_MEM)
+    DISPATCH_DATA_TYPE(SHARED_MEM_INIT)
   } else if (mem_type == "FileMemory") {
-    DISPATCH_DATA_TYPE(INIT_FILE_MEM)
+    DISPATCH_DATA_TYPE(FILE_MEM_INIT)
   } else {
     throw Rcpp::exception("Unsupported memory type.");
   }

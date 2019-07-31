@@ -19,7 +19,7 @@
 // idea taken from CRAN package bigstatsr
 
 #define DISPATCH_DATA_TYPE(CALL) {                                            \
-  switch(data_type) {                                                         \
+  switch (data_type) {                                                        \
     case 1: CALL(unsigned short)                                              \
     case 2: CALL(unsigned int)                                                \
     case 3: CALL(unsigned long)                                               \

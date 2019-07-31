@@ -14,11 +14,11 @@ test_that("shared memory object instantiation", {
   expect_equal(shared_mem$id, mem_id)
   expect_equal(shared_mem$data_type, data_type)
   expect_equal(shared_mem$mem_type, mem_type)
-  expect_is(shared_mem$obj_ptr, "externalptr")
+  expect_is(shared_mem$mem_ptr, "externalptr")
   expect_is(shared_mem$data_ptr, "externalptr")
-  expect_false(identical(shared_mem$obj_ptr, methods::new("externalptr")))
+  expect_false(identical(shared_mem$mem_ptr, methods::new("externalptr")))
   expect_false(identical(shared_mem$data_ptr, methods::new("externalptr")))
-  expect_false(identical(shared_mem$obj_ptr, shared_mem$data_ptr))
+  expect_false(identical(shared_mem$mem_ptr, shared_mem$data_ptr))
 })
 
 test_that("shared memory object de/attaching", {
@@ -47,11 +47,11 @@ test_that("file backed memory object instantiation", {
   expect_equal(file_mem$id, mem_id)
   expect_equal(file_mem$data_type, data_type)
   expect_equal(file_mem$mem_type, mem_type)
-  expect_is(file_mem$obj_ptr, "externalptr")
+  expect_is(file_mem$mem_ptr, "externalptr")
   expect_is(file_mem$data_ptr, "externalptr")
-  expect_false(identical(file_mem$obj_ptr, methods::new("externalptr")))
+  expect_false(identical(file_mem$mem_ptr, methods::new("externalptr")))
   expect_false(identical(file_mem$data_ptr, methods::new("externalptr")))
-  expect_false(identical(file_mem$obj_ptr, file_mem$data_ptr))
+  expect_false(identical(file_mem$mem_ptr, file_mem$data_ptr))
 })
 
 test_that("file backed memory object de/attaching", {

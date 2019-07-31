@@ -18,16 +18,16 @@ memory <- R6::R6Class(
       private$dtyp <- data_type
       private$mtyp <- mem_type
 
-      private$init()
+      private$init_mem()
     },
 
     attach = function() {
-      mem_attach(self$obj_ptr)
+      mem_attach(self$mem_ptr)
       invisible(self)
     },
 
     detach = function() {
-      mem_detach(self$obj_ptr)
+      mem_detach(self$mem_ptr)
       invisible(self)
     },
 
@@ -38,7 +38,7 @@ memory <- R6::R6Class(
       )
 
       private$leng <- new_length
-      mem_resize(self$obj_ptr, new_length, private$dtyp)
+      mem_resize(self$mem_ptr, new_length, private$dtyp)
 
       invisible(self)
     }
@@ -46,23 +46,23 @@ memory <- R6::R6Class(
 
   active = list(
 
-    obj_ptr = function() {
+    mem_ptr = function() {
 
       if (identical(methods::new("externalptr"), private$memory)) {
-        private$init()
+        private$init_mem()
       }
 
       private$memory
     },
 
-    data_ptr = function() get_mem_address(self$obj_ptr, private$dtyp),
+    data_ptr = function() get_mem_address(self$mem_ptr, private$dtyp),
 
-    is_attached = function() is_mem_attached(self$obj_ptr),
+    is_attached = function() is_mem_attached(self$mem_ptr),
 
     length = function() {
 
       assert_that(
-        get_mem_length(self$obj_ptr, private$dtyp) == private$leng
+        get_mem_length(self$mem_ptr, private$dtyp) == private$leng
       )
 
       private$leng
@@ -70,7 +70,7 @@ memory <- R6::R6Class(
 
     id = function() {
 
-      assert_that(get_mem_id(self$obj_ptr) == private$name)
+      assert_that(get_mem_id(self$mem_ptr) == private$name)
 
       private$name
     },
@@ -88,13 +88,13 @@ memory <- R6::R6Class(
 
     memory = NULL,
 
-    init = function() {
-      private$memory <- init_mem(private$name, private$leng, private$dtyp,
+    init_mem = function() {
+      private$memory <- mem_init(private$name, private$leng, private$dtyp,
                                  private$mtyp)
       invisible(self)
     },
 
-    finalize = function() mem_remove(self$obj_ptr)
+    finalize = function() mem_remove(self$mem_ptr)
   )
 )
 
