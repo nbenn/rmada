@@ -33,12 +33,12 @@ mat <- R6::R6Class(
     },
 
     n_rows = function() {
-      assert_that(private$nrow == mat_n_rows(private$mat, super$data_type))
+      assert_that(private$nrow == n_rows(private$mat))
       private$nrow
     },
 
     n_cols = function() {
-      assert_that(private$ncol == mat_n_cols(private$mat, super$data_type))
+      assert_that(private$ncol == n_cols(private$mat))
       private$ncol
     }
   ),

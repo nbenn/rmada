@@ -5,12 +5,12 @@ mat_init <- function(mem, n_rows, n_cols, data_type) {
     .Call(`_rmada_mat_init`, mem, n_rows, n_cols, data_type)
 }
 
-mat_n_rows <- function(mat, data_type) {
-    .Call(`_rmada_mat_n_rows`, mat, data_type)
+n_rows <- function(x) {
+    .Call(`_rmada_n_rows`, x)
 }
 
-mat_n_cols <- function(mat, data_type) {
-    .Call(`_rmada_mat_n_cols`, mat, data_type)
+n_cols <- function(x) {
+    .Call(`_rmada_n_cols`, x)
 }
 
 mem_init <- function(name, length, data_type, mem_type) {

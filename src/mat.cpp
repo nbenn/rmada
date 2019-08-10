@@ -16,45 +16,44 @@
 #include <rmada/mem.h>
 #include <rmada/dispatch_type.h>
 
-#include <RcppArmadillo.h>
-
 template <typename T>
-SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols) {
-  T* ptr = static_cast<T*>(mem->get_address());
-  arma::Mat<T>* res = new arma::Mat<T>(ptr, n_rows, n_cols, false, true);
-  return Rcpp::XPtr< arma::Mat<T> >(res);
-}
-
-#define MAT_INIT(TYPE) return mat_init<TYPE>(mem, n_rows, n_cols);
+struct MatInit {
+  SEXP operator()(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword
+      n_cols) {
+    using arma_t = arma::Mat<T>;
+    T* ptr = static_cast<T*>(mem->get_address());
+    arma_t* res = new arma_t(ptr, n_rows, n_cols, false, true);
+    return Rcpp::XPtr<arma_t>(res, true,
+        Rcpp::wrap(i_form_arma_type<arma_t>::value));
+  }
+};
 
 // [[Rcpp::export]]
 SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols,
-    int data_type) {
-  DISPATCH_DATA_TYPE(MAT_INIT)
+    std::size_t data_type) {
+  return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
 }
 
 template <typename T>
-arma::uword mat_n_rows(SEXP mat) {
-  Rcpp::XPtr< arma::Mat<T> > p(mat);
-  return p->n_rows;
-}
-
-#define MAT_N_ROWS(TYPE) return mat_n_rows<TYPE>(mat);
+struct NRows {
+  arma::uword operator()(SEXP x) {
+    return Rcpp::XPtr<T>(x)->n_rows;
+  }
+};
 
 // [[Rcpp::export]]
-arma::uword mat_n_rows(SEXP mat, int data_type) {
-  DISPATCH_DATA_TYPE(MAT_N_ROWS)
+arma::uword n_rows(SEXP x) {
+  return dispatch_arma_obj<NRows>(x);
 }
 
 template <typename T>
-arma::uword mat_n_cols(SEXP mat) {
-  Rcpp::XPtr< arma::Mat<T> > p(mat);
-  return p->n_cols;
-}
-
-#define MAT_N_COLS(TYPE) return mat_n_cols<TYPE>(mat);
+struct NCols {
+  arma::uword operator()(SEXP x) {
+    return Rcpp::XPtr<T>(x)->n_cols;
+  }
+};
 
 // [[Rcpp::export]]
-arma::uword mat_n_cols(SEXP mat, int data_type) {
-  DISPATCH_DATA_TYPE(MAT_N_COLS)
+arma::uword n_cols(SEXP x) {
+  return dispatch_arma_obj<NCols>(x);
 }

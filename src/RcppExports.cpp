@@ -8,7 +8,7 @@
 using namespace Rcpp;
 
 // mat_init
-SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols, int data_type);
+SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols, std::size_t data_type);
 RcppExport SEXP _rmada_mat_init(SEXP memSEXP, SEXP n_rowsSEXP, SEXP n_colsSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -16,32 +16,30 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
     Rcpp::traits::input_parameter< arma::uword >::type n_rows(n_rowsSEXP);
     Rcpp::traits::input_parameter< arma::uword >::type n_cols(n_colsSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
     rcpp_result_gen = Rcpp::wrap(mat_init(mem, n_rows, n_cols, data_type));
     return rcpp_result_gen;
 END_RCPP
 }
-// mat_n_rows
-arma::uword mat_n_rows(SEXP mat, int data_type);
-RcppExport SEXP _rmada_mat_n_rows(SEXP matSEXP, SEXP data_typeSEXP) {
+// n_rows
+arma::uword n_rows(SEXP x);
+RcppExport SEXP _rmada_n_rows(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type mat(matSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(mat_n_rows(mat, data_type));
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(n_rows(x));
     return rcpp_result_gen;
 END_RCPP
 }
-// mat_n_cols
-arma::uword mat_n_cols(SEXP mat, int data_type);
-RcppExport SEXP _rmada_mat_n_cols(SEXP matSEXP, SEXP data_typeSEXP) {
+// n_cols
+arma::uword n_cols(SEXP x);
+RcppExport SEXP _rmada_n_cols(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type mat(matSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(mat_n_cols(mat, data_type));
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(n_cols(x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -152,8 +150,8 @@ RcppExport SEXP run_testthat_tests();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rmada_mat_init", (DL_FUNC) &_rmada_mat_init, 4},
-    {"_rmada_mat_n_rows", (DL_FUNC) &_rmada_mat_n_rows, 2},
-    {"_rmada_mat_n_cols", (DL_FUNC) &_rmada_mat_n_cols, 2},
+    {"_rmada_n_rows", (DL_FUNC) &_rmada_n_rows, 1},
+    {"_rmada_n_cols", (DL_FUNC) &_rmada_n_cols, 1},
     {"_rmada_mem_init", (DL_FUNC) &_rmada_mem_init, 4},
     {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},
     {"_rmada_mem_detach", (DL_FUNC) &_rmada_mem_detach, 1},
