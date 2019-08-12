@@ -27,25 +27,29 @@
 
 namespace bip = boost::interprocess;
 
-SharedMemory::SharedMemory(std::string id, uintmax_t length) {
-
-  try {
-
+SharedMemory::SharedMemory(std::string id, uintmax_t length)
+{
+  try
+  {
     mem = bip::shared_memory_object(bip::create_only, id.c_str(),
         bip::read_write);
     mem.truncate(length);
-
-  } catch(const bip::interprocess_exception& er) {
-
-    if (er.get_native_error() == boost::system::errc::file_exists) {
+  }
+  catch(const bip::interprocess_exception& er)
+  {
+    if (er.get_native_error() == boost::system::errc::file_exists)
+    {
       mem = bip::shared_memory_object(bip::open_only, id.c_str(),
           bip::read_write);
-    } else {
+    }
+    else
+    {
       throw;
     }
   }
 
-  if (get_size() != length) {
+  if (get_size() != length)
+  {
     throw std::runtime_error("Could not set up a shared memory segment of "
         "the requested size.");
   }
@@ -53,41 +57,45 @@ SharedMemory::SharedMemory(std::string id, uintmax_t length) {
   map = bip::mapped_region(mem, bip::read_write);
 }
 
-void SharedMemory::attach() {
-
-  if (!is_attached()) {
+void SharedMemory::attach()
+{
+  if (!is_attached())
+  {
     map = bip::mapped_region(mem, bip::read_write);
   }
 }
 
-void SharedMemory::detach() {
-
-  if (is_attached()) {
+void SharedMemory::detach()
+{
+  if (is_attached())
+  {
     map = bip::mapped_region();
   }
 }
 
-bool SharedMemory::is_attached() {
+bool SharedMemory::is_attached()
+{
   return map.get_address() != nullptr;
 }
 
-void* SharedMemory::get_address() {
-
+void* SharedMemory::get_address()
+{
   attach();
-
   return map.get_address();
 }
 
-uintmax_t SharedMemory::get_size() {
-
+uintmax_t SharedMemory::get_size()
+{
   bip::offset_t size;
 
-  if (!mem.get_size(size)) {
+  if (!mem.get_size(size))
+  {
     throw std::runtime_error("Could not obtain size of shared memory "
         "segment.");
   }
 
-  if (size < 0) {
+  if (size < 0)
+  {
     throw std::runtime_error("Determined size of shared memory segment to be "
         "negative.");
   }
@@ -95,36 +103,39 @@ uintmax_t SharedMemory::get_size() {
   return size;
 }
 
-std::string SharedMemory::get_id() {
+std::string SharedMemory::get_id()
+{
   return std::string(mem.get_name());
 }
 
-void SharedMemory::remove() {
-
+void SharedMemory::remove()
+{
   detach();
 
-  if (!mem.remove(mem.get_name())) {
+  if (!mem.remove(mem.get_name()))
+  {
     throw std::runtime_error("Could not remove shared memory segment.");
   }
 
   mem = bip::shared_memory_object();
 }
 
-void SharedMemory::resize(uintmax_t new_size) {
-
+void SharedMemory::resize(uintmax_t new_size)
+{
   detach();
-
   mem.truncate(new_size);
 }
 
-FileMemory::FileMemory(std::string file_path, uintmax_t length) {
-
-  if (!file_is_accessible(file_path)) {
+FileMemory::FileMemory(std::string file_path, uintmax_t length)
+{
+  if (!file_is_accessible(file_path))
+  {
     create_file(file_path);
     resize_file(file_path, length);
   }
 
-  if (file_size(file_path) != length) {
+  if (file_size(file_path) != length)
+  {
     throw std::runtime_error("File-size does not correspond to requested "
         "size.");
   }
@@ -133,41 +144,45 @@ FileMemory::FileMemory(std::string file_path, uintmax_t length) {
   map = bip::mapped_region(mem, bip::read_write);
 }
 
-void FileMemory::attach() {
-
-  if (!is_attached()) {
+void FileMemory::attach()
+{
+  if (!is_attached())
+  {
     map = bip::mapped_region(mem, bip::read_write);
   }
 }
 
-void FileMemory::detach() {
-
-  if (is_attached()) {
+void FileMemory::detach()
+{
+  if (is_attached())
+  {
     map = bip::mapped_region();
   }
 }
 
-bool FileMemory::is_attached() {
+bool FileMemory::is_attached()
+{
   return map.get_address() != nullptr;
 }
 
-void* FileMemory::get_address() {
-
+void* FileMemory::get_address()
+{
   attach();
-
   return map.get_address();
 }
 
-uintmax_t FileMemory::get_size() {
+uintmax_t FileMemory::get_size()
+{
   return file_size(file_path());
 }
 
-std::string FileMemory::get_id() {
+std::string FileMemory::get_id()
+{
   return file_path();
 }
 
-void FileMemory::remove() {
-
+void FileMemory::remove()
+{
   detach();
 
   if (!mem.remove(file_path().c_str())) {
@@ -177,50 +192,55 @@ void FileMemory::remove() {
   mem = bip::file_mapping();
 }
 
-void FileMemory::resize(uintmax_t new_size) {
-
+void FileMemory::resize(uintmax_t new_size)
+{
   detach();
-
   resize_file(file_path(), new_size);
 }
 
-std::string FileMemory::file_path() {
+std::string FileMemory::file_path()
+{
   return std::string(mem.get_name());
 }
 
-bool file_is_accessible(std::string file_path) {
+bool file_is_accessible(std::string file_path)
+{
   return std::ifstream(file_path).good();
 }
 
-uintmax_t file_size(std::string file_path) {
-
+uintmax_t file_size(std::string file_path)
+{
   std::ifstream file(file_path, std::ios::ate | std::ios::binary);
 
-  if (!std::ifstream(file_path).good()) {
+  if (!std::ifstream(file_path).good())
+  {
     throw std::runtime_error("Can not determine file size.");
   }
 
   return file.tellg();
 }
 
-void create_file(std::string file_path) {
-
-  if (file_is_accessible(file_path)) {
+void create_file(std::string file_path)
+{
+  if (file_is_accessible(file_path))
+  {
     throw std::runtime_error("File already exists.");
   }
 
   std::ofstream outfile(file_path);
 }
 
-void resize_file(std::string file_path, uintmax_t new_size) {
-
-  if (!file_is_accessible(file_path)) {
+void resize_file(std::string file_path, uintmax_t new_size)
+{
+  if (!file_is_accessible(file_path))
+  {
     throw std::runtime_error("Will not resize inaccessible file.");
   }
 
   auto file = std::fopen(file_path.c_str(), "r+");
 
-  if (!file) {
+  if (!file)
+  {
     std::error_code ec(errno, std::system_category());
     throw std::system_error(ec, "Exception occurred opening file");
   }
@@ -231,7 +251,8 @@ void resize_file(std::string file_path, uintmax_t new_size) {
   LARGE_INTEGER size = {new_size};
 
   if (!SetFilePointerEx(hand, size, NULL, FILE_BEGIN) ||
-      !SetEndOfFile(hand)) {
+      !SetEndOfFile(hand))
+  {
     DWORD err_val = GetLastError();
     std::error_code ec(err_val, std::system_category());
     throw std::system_error(ec, "Exception occurred resizing file");
@@ -239,7 +260,8 @@ void resize_file(std::string file_path, uintmax_t new_size) {
 
 #else
 
-  if (ftruncate(fileno(file), new_size) != 0) {
+  if (ftruncate(fileno(file), new_size) != 0)
+  {
     std::error_code ec(errno, std::system_category());
     throw std::system_error(ec, "Exception occurred resizing file");
   }

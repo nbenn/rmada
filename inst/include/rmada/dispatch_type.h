@@ -23,29 +23,32 @@
 
 namespace mp11 = boost::mp11;
 
-using num_types = mp11::mp_list
-  <
-    std::complex<float>,
-    std::complex<double>,
-    unsigned short,
-    unsigned int,
-    unsigned long,
-    short,
-    int,
-    long,
-    float,
-    double
-  >;
+using mem_types = mp11::mp_list<
+  SharedMemory,
+  FileMemory
+>;
+
+using num_types = mp11::mp_list<
+  std::complex<float>,
+  std::complex<double>,
+  unsigned short,
+  unsigned int,
+  unsigned long,
+  short,
+  int,
+  long,
+  float,
+  double
+>;
 
 template <typename T>
-using object_types = mp11::mp_list
-  <
-    arma::Mat<T>,
-    arma::Col<T>,
-    arma::Row<T>,
-    arma::Cube<T>,
-    arma::SpMat<T>
-  >;
+using object_types = mp11::mp_list<
+  arma::Mat<T>,
+  arma::Col<T>,
+  arma::Row<T>,
+  arma::Cube<T>,
+  arma::SpMat<T>
+>;
 
 using arma_types = mp11::mp_apply<
   mp11::mp_append, mp11::mp_transform<object_types, num_types>
@@ -67,6 +70,12 @@ using num_type_from_i = mp11::mp_at_c<num_types, I>;
 
 template <typename T>
 using i_form_num_type = mp11::mp_find<num_types, T>;
+
+template <std::size_t I>
+using mem_type_from_i = mp11::mp_at_c<mem_types, I>;
+
+template <typename T>
+using i_form_mem_type = mp11::mp_find<mem_types, T>;
 
 template <typename T, std::size_t N> struct dispatch_impl
 {
@@ -103,24 +112,19 @@ template <typename T> struct dispatch_impl<T, 1>
   }
 };
 
+template <typename L, template<typename> class Fn, typename ...Ar>
+auto dispatch_type(std::size_t i, Ar&&... rg) ->
+    decltype(Fn<mp11::mp_at_c<L, 0>>()(std::forward<Ar>(rg)...))
+{
+  using disp = dispatch_impl<L, std::size_t{mp11::mp_size<L>::value}>;
+  return disp::template call<0, Fn>(i, std::forward<Ar>(rg)...);
+}
+
 template <template<typename> class Fn, typename ...Ar>
 auto dispatch_arma_type(std::size_t type, Ar&&... rg) ->
     decltype(Fn<arma_type_from_i<0>>()(std::forward<Ar>(rg)...))
 {
-  using disp = dispatch_impl<
-    arma_types, std::size_t{mp11::mp_size<arma_types>::value}
-  >;
-  return disp::template call<0, Fn>(type, std::forward<Ar>(rg)...);
-}
-
-template <template<typename> class Fn, typename ...Ar>
-auto dispatch_num_type(std::size_t type, Ar&&... rg) ->
-    decltype(Fn<num_type_from_i<0>>()(std::forward<Ar>(rg)...))
-{
-  using disp = dispatch_impl<
-    num_types, std::size_t{mp11::mp_size<num_types>::value}
-  >;
-  return disp::template call<0, Fn>(type, std::forward<Ar>(rg)...);
+  return dispatch_type<arma_types, Fn>(type, std::forward<Ar>(rg)...);
 }
 
 template <template<typename> class Fn, typename ...Ar>
@@ -134,22 +138,11 @@ auto dispatch_arma_obj(SEXP x, Ar&&... rg) ->
       std::forward<Ar>(rg)...);
 }
 
-// idea taken from CRAN package bigstatsr
-
-#define DISPATCH_DATA_TYPE(CALL) {                                            \
-  switch (data_type) {                                                        \
-    case 1: CALL(unsigned short)                                              \
-    case 2: CALL(unsigned int)                                                \
-    case 3: CALL(unsigned long)                                               \
-    case 4: CALL(short)                                                       \
-    case 5: CALL(int)                                                         \
-    case 6: CALL(long)                                                        \
-    case 7: CALL(float)                                                       \
-    case 8: CALL(double)                                                      \
-    default: throw Rcpp::exception("Unsupported data type.");                 \
-  }                                                                           \
+template <template<typename> class Fn, typename ...Ar>
+auto dispatch_num_type(std::size_t type, Ar&&... rg) ->
+    decltype(Fn<num_type_from_i<0>>()(std::forward<Ar>(rg)...))
+{
+  return dispatch_type<num_types, Fn>(type, std::forward<Ar>(rg)...);
 }
-
-
 
 #endif  // INST_INCLUDE_RMADA_DISPATCH_TYPE_H_

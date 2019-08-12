@@ -13,8 +13,8 @@ n_cols <- function(x) {
     .Call(`_rmada_n_cols`, x)
 }
 
-mem_init <- function(name, length, data_type, mem_type) {
-    .Call(`_rmada_mem_init`, name, length, data_type, mem_type)
+mem_init <- function(name, n_elem, data_type, mem_type) {
+    .Call(`_rmada_mem_init`, name, n_elem, data_type, mem_type)
 }
 
 mem_attach <- function(mem) {
@@ -45,7 +45,7 @@ mem_remove <- function(mem) {
     invisible(.Call(`_rmada_mem_remove`, mem))
 }
 
-mem_resize <- function(mem, length, data_type) {
-    invisible(.Call(`_rmada_mem_resize`, mem, length, data_type))
+mem_resize <- function(mem, n_elem, data_type) {
+    invisible(.Call(`_rmada_mem_resize`, mem, n_elem, data_type))
 }
 

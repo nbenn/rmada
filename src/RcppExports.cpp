@@ -44,16 +44,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // mem_init
-SEXP mem_init(std::string name, std::size_t length, int data_type, std::string mem_type);
-RcppExport SEXP _rmada_mem_init(SEXP nameSEXP, SEXP lengthSEXP, SEXP data_typeSEXP, SEXP mem_typeSEXP) {
+SEXP mem_init(std::string name, std::size_t n_elem, std::size_t data_type, std::size_t mem_type);
+RcppExport SEXP _rmada_mem_init(SEXP nameSEXP, SEXP n_elemSEXP, SEXP data_typeSEXP, SEXP mem_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type name(nameSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type length(lengthSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    Rcpp::traits::input_parameter< std::string >::type mem_type(mem_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(mem_init(name, length, data_type, mem_type));
+    Rcpp::traits::input_parameter< std::size_t >::type n_elem(n_elemSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type mem_type(mem_typeSEXP);
+    rcpp_result_gen = Rcpp::wrap(mem_init(name, n_elem, data_type, mem_type));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -89,25 +89,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // get_mem_address
-SEXP get_mem_address(Rcpp::XPtr<Memory> mem, int data_type);
+SEXP get_mem_address(Rcpp::XPtr<Memory> mem, std::size_t data_type);
 RcppExport SEXP _rmada_get_mem_address(SEXP memSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
     rcpp_result_gen = Rcpp::wrap(get_mem_address(mem, data_type));
     return rcpp_result_gen;
 END_RCPP
 }
 // get_mem_length
-int get_mem_length(Rcpp::XPtr<Memory> mem, int data_type);
+std::size_t get_mem_length(Rcpp::XPtr<Memory> mem, std::size_t data_type);
 RcppExport SEXP _rmada_get_mem_length(SEXP memSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
     rcpp_result_gen = Rcpp::wrap(get_mem_length(mem, data_type));
     return rcpp_result_gen;
 END_RCPP
@@ -134,14 +134,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // mem_resize
-void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t length, int data_type);
-RcppExport SEXP _rmada_mem_resize(SEXP memSEXP, SEXP lengthSEXP, SEXP data_typeSEXP) {
+void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t n_elem, std::size_t data_type);
+RcppExport SEXP _rmada_mem_resize(SEXP memSEXP, SEXP n_elemSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type length(lengthSEXP);
-    Rcpp::traits::input_parameter< int >::type data_type(data_typeSEXP);
-    mem_resize(mem, length, data_type);
+    Rcpp::traits::input_parameter< std::size_t >::type n_elem(n_elemSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
+    mem_resize(mem, n_elem, data_type);
     return R_NilValue;
 END_RCPP
 }

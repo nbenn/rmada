@@ -22,10 +22,9 @@
 #include <boost/interprocess/shared_memory_object.hpp>
 #include <boost/interprocess/file_mapping.hpp>
 
-class Memory {
-
+class Memory
+{
 public:
-
   virtual void attach() = 0;
   virtual void detach() = 0;
   virtual bool is_attached() = 0;
@@ -41,10 +40,9 @@ public:
   virtual ~Memory() {}
 };
 
-class SharedMemory: public Memory {
-
+class SharedMemory: public Memory
+{
 public:
-
   SharedMemory(std::string, uintmax_t);
 
   void attach();
@@ -60,15 +58,13 @@ public:
   void resize(uintmax_t);
 
 private:
-
   boost::interprocess::shared_memory_object mem;
   boost::interprocess::mapped_region map;
 };
 
-class FileMemory: public Memory {
-
+class FileMemory: public Memory
+{
 public:
-
   FileMemory(std::string, uintmax_t);
 
   void attach();
@@ -84,7 +80,6 @@ public:
   void resize(uintmax_t);
 
 private:
-
   boost::interprocess::file_mapping mem;
   boost::interprocess::mapped_region map;
 
