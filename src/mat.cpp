@@ -34,6 +34,11 @@ struct MatInit
 SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols,
     std::size_t data_type)
 {
+  if (data_type != Rcpp::as<std::size_t>(R_ExternalPtrTag(mem)))
+  {
+    throw std::runtime_error("Data types do not match.")
+  }
+
   return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
 }
 

@@ -23,9 +23,11 @@ struct MemInit
 {
   SEXP operator()(std::string name, std::size_t n_elem)
   {
-    using MEM = mp11::mp_at_c<L, 0>;
-    auto res = new MEM(name, n_elem * sizeof(mp11::mp_at_c<L, 1>));
-    return Rcpp::XPtr<MEM>(res);
+    using mem = mp11::mp_at_c<L, 0>;
+    using dat = mp11::mp_at_c<L, 1>;
+    auto ind = std::size_t{i_form_num_type<dat>::value};
+    auto res = new mem(name, n_elem * sizeof(dat));
+    return Rcpp::XPtr<mem>(res, true, Rcpp::wrap(ind));
   }
 };
 

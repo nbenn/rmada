@@ -107,7 +107,7 @@ template <typename T> struct dispatch_impl<T, 1>
     }
     else
     {
-      throw std::runtime_error("number of available types exhausted.");
+      throw std::runtime_error("Exhausted number of available types.");
     }
   }
 };
