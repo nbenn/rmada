@@ -17,43 +17,52 @@
 #include <rmada/dispatch_type.h>
 
 template <typename T>
-struct MatInit {
+struct MatInit
+{
   SEXP operator()(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword
-      n_cols) {
+      n_cols)
+  {
     using arma_t = arma::Mat<T>;
     T* ptr = static_cast<T*>(mem->get_address());
-    arma_t* res = new arma_t(ptr, n_rows, n_cols, false, true);
-    return Rcpp::XPtr<arma_t>(res, true,
-        Rcpp::wrap(i_form_arma_type<arma_t>::value));
+    auto res = new arma_t(ptr, n_rows, n_cols, false, true);
+    auto ind = std::size_t{i_form_arma_type<arma_t>::value};
+    return Rcpp::XPtr<arma_t>(res, true, Rcpp::wrap(ind));
   }
 };
 
 // [[Rcpp::export]]
 SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols,
-    std::size_t data_type) {
+    std::size_t data_type)
+{
   return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
 }
 
 template <typename T>
-struct NRows {
-  arma::uword operator()(SEXP x) {
+struct NRows
+{
+  arma::uword operator()(SEXP x)
+  {
     return Rcpp::XPtr<T>(x)->n_rows;
   }
 };
 
 // [[Rcpp::export]]
-arma::uword n_rows(SEXP x) {
+arma::uword n_rows(SEXP x)
+{
   return dispatch_arma_obj<NRows>(x);
 }
 
 template <typename T>
-struct NCols {
-  arma::uword operator()(SEXP x) {
+struct NCols
+{
+  arma::uword operator()(SEXP x)
+  {
     return Rcpp::XPtr<T>(x)->n_cols;
   }
 };
 
 // [[Rcpp::export]]
-arma::uword n_cols(SEXP x) {
+arma::uword n_cols(SEXP x)
+{
   return dispatch_arma_obj<NCols>(x);
 }
