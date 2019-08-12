@@ -16,6 +16,8 @@
 #ifndef INST_INCLUDE_RMADA_DISPATCH_TYPE_H_
 #define INST_INCLUDE_RMADA_DISPATCH_TYPE_H_
 
+#include <rmada/mem.h>
+
 #include <RcppArmadillo.h>
 
 #include <boost/mp11/list.hpp>

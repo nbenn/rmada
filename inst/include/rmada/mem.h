@@ -43,6 +43,7 @@ public:
 class SharedMemory: public Memory
 {
 public:
+  SharedMemory() = default;
   SharedMemory(std::string, uintmax_t);
 
   void attach();
@@ -65,6 +66,7 @@ private:
 class FileMemory: public Memory
 {
 public:
+  FileMemory() = default;
   FileMemory(std::string, uintmax_t);
 
   void attach();

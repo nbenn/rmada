@@ -49,3 +49,11 @@ mem_resize <- function(mem, n_elem, data_type) {
     invisible(.Call(`_rmada_mem_resize`, mem, n_elem, data_type))
 }
 
+list_num_types <- function() {
+    .Call(`_rmada_list_num_types`)
+}
+
+list_mem_types <- function() {
+    .Call(`_rmada_list_mem_types`)
+}
+

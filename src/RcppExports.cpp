@@ -145,6 +145,26 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// list_num_types
+std::vector<std::string> list_num_types();
+RcppExport SEXP _rmada_list_num_types() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(list_num_types());
+    return rcpp_result_gen;
+END_RCPP
+}
+// list_mem_types
+std::vector<std::string> list_mem_types();
+RcppExport SEXP _rmada_list_mem_types() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(list_mem_types());
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP run_testthat_tests();
 
@@ -161,6 +181,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_get_mem_id", (DL_FUNC) &_rmada_get_mem_id, 1},
     {"_rmada_mem_remove", (DL_FUNC) &_rmada_mem_remove, 1},
     {"_rmada_mem_resize", (DL_FUNC) &_rmada_mem_resize, 3},
+    {"_rmada_list_num_types", (DL_FUNC) &_rmada_list_num_types, 0},
+    {"_rmada_list_mem_types", (DL_FUNC) &_rmada_list_mem_types, 0},
     {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
     {NULL, NULL, 0}
 };
