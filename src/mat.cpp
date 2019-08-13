@@ -7,14 +7,16 @@
 
 // This program is distributed in the hope that it will be useful, but WITHOUT
 // ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 // more details.
 
 // You should have received a copy of the GNU General Public License along
-// with this program.  If not, see <http://www.gnu.org/licenses/>.
+// with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <rmada/mem.h>
 #include <rmada/dispatch_type.h>
+
+#include "utils.h"
 
 template <typename T>
 struct MatInit
@@ -31,7 +33,7 @@ struct MatInit
 };
 
 // [[Rcpp::export]]
-SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols,
+SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols,
     std::size_t data_type)
 {
   if (data_type != Rcpp::as<std::size_t>(R_ExternalPtrTag(mem)))
@@ -39,7 +41,8 @@ SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols,
     throw std::runtime_error("Data types do not match.");
   }
 
-  return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
+  return dispatch_num_type<MatInit>(data_type, Rcpp::XPtr<Memory>(mem),
+      n_rows, n_cols);
 }
 
 template <typename T>
@@ -47,7 +50,7 @@ struct NRows
 {
   arma::uword operator()(SEXP x)
   {
-    return Rcpp::XPtr<T>(x)->n_rows;
+    return xptr<T>(x)->n_rows;
   }
 };
 
@@ -62,7 +65,7 @@ struct NCols
 {
   arma::uword operator()(SEXP x)
   {
-    return Rcpp::XPtr<T>(x)->n_cols;
+    return xptr<T>(x)->n_cols;
   }
 };
 

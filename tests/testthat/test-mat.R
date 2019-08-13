@@ -8,6 +8,7 @@ mem_type <- "SharedMemory"
 
 sh_mat <- mat$new(nrow, ncol, id = mem_id, data_type = data_type,
                   mem_type = mem_type)
+teardown(rm(sh_mat))
 
 test_that("matrix instantiation", {
   expect_is(sh_mat, "mat")
@@ -15,4 +16,3 @@ test_that("matrix instantiation", {
   expect_equal(nrow(sh_mat), nrow)
   expect_equal(ncol(sh_mat), ncol)
 })
-

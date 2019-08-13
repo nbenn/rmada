@@ -8,12 +8,12 @@
 using namespace Rcpp;
 
 // mat_init
-SEXP mat_init(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword n_cols, std::size_t data_type);
+SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols, std::size_t data_type);
 RcppExport SEXP _rmada_mat_init(SEXP memSEXP, SEXP n_rowsSEXP, SEXP n_colsSEXP, SEXP data_typeSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     Rcpp::traits::input_parameter< arma::uword >::type n_rows(n_rowsSEXP);
     Rcpp::traits::input_parameter< arma::uword >::type n_cols(n_colsSEXP);
     Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
@@ -58,90 +58,87 @@ BEGIN_RCPP
 END_RCPP
 }
 // mem_attach
-void mem_attach(Rcpp::XPtr<Memory> mem);
+void mem_attach(SEXP mem);
 RcppExport SEXP _rmada_mem_attach(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     mem_attach(mem);
     return R_NilValue;
 END_RCPP
 }
 // mem_detach
-void mem_detach(Rcpp::XPtr<Memory> mem);
+void mem_detach(SEXP mem);
 RcppExport SEXP _rmada_mem_detach(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     mem_detach(mem);
     return R_NilValue;
 END_RCPP
 }
 // is_mem_attached
-bool is_mem_attached(Rcpp::XPtr<Memory> mem);
+bool is_mem_attached(SEXP mem);
 RcppExport SEXP _rmada_is_mem_attached(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     rcpp_result_gen = Rcpp::wrap(is_mem_attached(mem));
     return rcpp_result_gen;
 END_RCPP
 }
 // get_mem_address
-SEXP get_mem_address(Rcpp::XPtr<Memory> mem, std::size_t data_type);
-RcppExport SEXP _rmada_get_mem_address(SEXP memSEXP, SEXP data_typeSEXP) {
+SEXP get_mem_address(SEXP mem);
+RcppExport SEXP _rmada_get_mem_address(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_mem_address(mem, data_type));
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_mem_address(mem));
     return rcpp_result_gen;
 END_RCPP
 }
 // get_mem_length
-std::size_t get_mem_length(Rcpp::XPtr<Memory> mem, std::size_t data_type);
-RcppExport SEXP _rmada_get_mem_length(SEXP memSEXP, SEXP data_typeSEXP) {
+std::size_t get_mem_length(SEXP mem);
+RcppExport SEXP _rmada_get_mem_length(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
-    rcpp_result_gen = Rcpp::wrap(get_mem_length(mem, data_type));
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
+    rcpp_result_gen = Rcpp::wrap(get_mem_length(mem));
     return rcpp_result_gen;
 END_RCPP
 }
 // get_mem_id
-std::string get_mem_id(Rcpp::XPtr<Memory> mem);
+std::string get_mem_id(SEXP mem);
 RcppExport SEXP _rmada_get_mem_id(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     rcpp_result_gen = Rcpp::wrap(get_mem_id(mem));
     return rcpp_result_gen;
 END_RCPP
 }
 // mem_remove
-void mem_remove(Rcpp::XPtr<Memory> mem);
+void mem_remove(SEXP mem);
 RcppExport SEXP _rmada_mem_remove(SEXP memSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     mem_remove(mem);
     return R_NilValue;
 END_RCPP
 }
 // mem_resize
-void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t n_elem, std::size_t data_type);
-RcppExport SEXP _rmada_mem_resize(SEXP memSEXP, SEXP n_elemSEXP, SEXP data_typeSEXP) {
+void mem_resize(SEXP mem, std::size_t n_elem);
+RcppExport SEXP _rmada_mem_resize(SEXP memSEXP, SEXP n_elemSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::XPtr<Memory> >::type mem(memSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type mem(memSEXP);
     Rcpp::traits::input_parameter< std::size_t >::type n_elem(n_elemSEXP);
-    Rcpp::traits::input_parameter< std::size_t >::type data_type(data_typeSEXP);
-    mem_resize(mem, n_elem, data_type);
+    mem_resize(mem, n_elem);
     return R_NilValue;
 END_RCPP
 }
@@ -186,11 +183,11 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},
     {"_rmada_mem_detach", (DL_FUNC) &_rmada_mem_detach, 1},
     {"_rmada_is_mem_attached", (DL_FUNC) &_rmada_is_mem_attached, 1},
-    {"_rmada_get_mem_address", (DL_FUNC) &_rmada_get_mem_address, 2},
-    {"_rmada_get_mem_length", (DL_FUNC) &_rmada_get_mem_length, 2},
+    {"_rmada_get_mem_address", (DL_FUNC) &_rmada_get_mem_address, 1},
+    {"_rmada_get_mem_length", (DL_FUNC) &_rmada_get_mem_length, 1},
     {"_rmada_get_mem_id", (DL_FUNC) &_rmada_get_mem_id, 1},
     {"_rmada_mem_remove", (DL_FUNC) &_rmada_mem_remove, 1},
-    {"_rmada_mem_resize", (DL_FUNC) &_rmada_mem_resize, 3},
+    {"_rmada_mem_resize", (DL_FUNC) &_rmada_mem_resize, 2},
     {"_rmada_list_num_types", (DL_FUNC) &_rmada_list_num_types, 0},
     {"_rmada_list_mem_types", (DL_FUNC) &_rmada_list_mem_types, 0},
     {"_rmada_list_arma_types", (DL_FUNC) &_rmada_list_arma_types, 0},

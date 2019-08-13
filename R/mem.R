@@ -39,7 +39,7 @@ memory <- R6::R6Class(
       )
 
       private$leng <- new_length
-      mem_resize(self$mem_ptr, new_length, private$dtyp)
+      mem_resize(self$mem_ptr, new_length)
 
       invisible(self)
     }
@@ -56,14 +56,14 @@ memory <- R6::R6Class(
       private$memory
     },
 
-    data_ptr = function() get_mem_address(self$mem_ptr, private$dtyp),
+    data_ptr = function() get_mem_address(self$mem_ptr),
 
     is_attached = function() is_mem_attached(self$mem_ptr),
 
     length = function() {
 
       assert_that(
-        get_mem_length(self$mem_ptr, private$dtyp) == private$leng
+        get_mem_length(self$mem_ptr) == private$leng
       )
 
       private$leng
@@ -76,8 +76,8 @@ memory <- R6::R6Class(
       private$name
     },
 
-    data_type = function() private$dtyp,
-    mem_type = function() private$mtyp
+    data_type = function() list_num_types()[private$dtyp + 1L],
+    mem_type = function() list_mem_types()[private$mtyp + 1L]
   ),
 
   private = list(

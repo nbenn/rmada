@@ -13,9 +13,15 @@
 // You should have received a copy of the GNU General Public License along
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef INST_INCLUDE_RMADA_TYPES_H_
-#define INST_INCLUDE_RMADA_TYPES_H_
+#ifndef UTILS_H_
+#define UTILS_H_
 
-#include <rmada/mem.h>
+#include <Rcpp.h>
 
-#endif  // INST_INCLUDE_RMADA_TYPES_H_
+template <typename T>
+Rcpp::XPtr<T> xptr(SEXP x)
+{
+  return Rcpp::XPtr<T>(x, R_ExternalPtrTag(x), R_ExternalPtrProtected(x));
+}
+
+#endif  // UTILS_H_

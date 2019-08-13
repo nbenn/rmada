@@ -7,16 +7,16 @@
 
 // This program is distributed in the hope that it will be useful, but WITHOUT
 // ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
 // more details.
 
 // You should have received a copy of the GNU General Public License along
-// with this program.  If not, see <http://www.gnu.org/licenses/>.
+// with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <rmada/mem.h>
 #include <rmada/dispatch_type.h>
 
-#include <Rcpp.h>
+#include "utils.h"
 
 template <typename L>
 struct MemInit
@@ -42,78 +42,78 @@ SEXP mem_init(std::string name, std::size_t n_elem, std::size_t data_type,
 }
 
 // [[Rcpp::export]]
-void mem_attach(Rcpp::XPtr<Memory> mem)
+void mem_attach(SEXP mem)
 {
-  mem->attach();
+  xptr<Memory>(mem)->attach();
 }
 
 // [[Rcpp::export]]
-void mem_detach(Rcpp::XPtr<Memory> mem)
+void mem_detach(SEXP mem)
 {
-  mem->detach();
+  xptr<Memory>(mem)->detach();
 }
 
 // [[Rcpp::export]]
-bool is_mem_attached(Rcpp::XPtr<Memory> mem)
+bool is_mem_attached(SEXP mem)
 {
-  return mem->is_attached();
+  return xptr<Memory>(mem)->is_attached();
 }
 
 template <typename T>
 struct MemAddress
 {
-  SEXP operator()(Rcpp::XPtr<Memory> mem)
+  SEXP operator()(SEXP mem)
   {
-    T* res = static_cast<T*>(mem->get_address());
-    return Rcpp::XPtr<T>(res, false);
+    T* res = static_cast<T*>(xptr<Memory>(mem)->get_address());
+    auto ind = std::size_t{i_form_num_type<T>::value};
+    return Rcpp::XPtr<T>(res, false, Rcpp::wrap(ind));
   }
 };
 
 // [[Rcpp::export]]
-SEXP get_mem_address(Rcpp::XPtr<Memory> mem, std::size_t data_type)
+SEXP get_mem_address(SEXP mem)
 {
-  return dispatch_num_type<MemAddress>(data_type, mem);
+  return dispatch_mem<MemAddress>(mem);
 }
 
 template <typename T>
 struct MemLength
 {
-  std::size_t operator()(Rcpp::XPtr<Memory> mem)
+  std::size_t operator()(SEXP mem)
   {
-    return mem->get_size() / sizeof(T);
+    return xptr<Memory>(mem)->get_size() / sizeof(T);
   }
 };
 
 // [[Rcpp::export]]
-std::size_t get_mem_length(Rcpp::XPtr<Memory> mem, std::size_t data_type)
+std::size_t get_mem_length(SEXP mem)
 {
-  return dispatch_num_type<MemLength>(data_type, mem);
+  return dispatch_mem<MemLength>(mem);
 }
 
 // [[Rcpp::export]]
-std::string get_mem_id(Rcpp::XPtr<Memory> mem)
+std::string get_mem_id(SEXP mem)
 {
-  return mem->get_id();
+  return xptr<Memory>(mem)->get_id();
 }
 
 // [[Rcpp::export]]
-void mem_remove(Rcpp::XPtr<Memory> mem)
+void mem_remove(SEXP mem)
 {
-  mem->remove();
+  xptr<Memory>(mem)->remove();
 }
 
 template <typename T>
 struct MemResize
 {
-  void operator()(Rcpp::XPtr<Memory> mem, std::size_t n_elem)
+  void operator()(SEXP mem, std::size_t n_elem)
   {
-    mem->resize(n_elem * sizeof(T));
+    xptr<Memory>(mem)->resize(n_elem * sizeof(T));
   }
 };
 
 // [[Rcpp::export]]
-void mem_resize(Rcpp::XPtr<Memory> mem, std::size_t n_elem,
-    std::size_t data_type)
+void mem_resize(SEXP mem, std::size_t n_elem)
 {
-  dispatch_num_type<MemResize>(data_type, mem, n_elem);
+  dispatch_mem<MemResize>(mem, n_elem);
 }

@@ -33,12 +33,12 @@ mat <- R6::R6Class(
     },
 
     n_rows = function() {
-      assert_that(private$nrow == n_rows(private$mat))
+      assert_that(private$nrow == n_rows(self$mat_ptr))
       private$nrow
     },
 
     n_cols = function() {
-      assert_that(private$ncol == n_cols(private$mat))
+      assert_that(private$ncol == n_cols(self$mat_ptr))
       private$ncol
     }
   ),
@@ -52,7 +52,7 @@ mat <- R6::R6Class(
 
     init_mat = function() {
       private$mat <- mat_init(super$mem_ptr, private$nrow, private$ncol,
-                              super$data_type)
+                              private$dtyp)
       invisible(self)
     }
   )

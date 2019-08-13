@@ -29,12 +29,12 @@ is_mem_attached <- function(mem) {
     .Call(`_rmada_is_mem_attached`, mem)
 }
 
-get_mem_address <- function(mem, data_type) {
-    .Call(`_rmada_get_mem_address`, mem, data_type)
+get_mem_address <- function(mem) {
+    .Call(`_rmada_get_mem_address`, mem)
 }
 
-get_mem_length <- function(mem, data_type) {
-    .Call(`_rmada_get_mem_length`, mem, data_type)
+get_mem_length <- function(mem) {
+    .Call(`_rmada_get_mem_length`, mem)
 }
 
 get_mem_id <- function(mem) {
@@ -45,8 +45,8 @@ mem_remove <- function(mem) {
     invisible(.Call(`_rmada_mem_remove`, mem))
 }
 
-mem_resize <- function(mem, n_elem, data_type) {
-    invisible(.Call(`_rmada_mem_resize`, mem, n_elem, data_type))
+mem_resize <- function(mem, n_elem) {
+    invisible(.Call(`_rmada_mem_resize`, mem, n_elem))
 }
 
 list_num_types <- function() {
