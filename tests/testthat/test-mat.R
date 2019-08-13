@@ -3,7 +3,7 @@ nrow <- 6L
 ncol <- 4L
 
 mem_id <- "shmem_test"
-data_type <- 8L
+data_type <- "int"
 mem_type <- "SharedMemory"
 
 sh_mat <- mat$new(nrow, ncol, id = mem_id, data_type = data_type,

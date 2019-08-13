@@ -37,3 +37,9 @@ std::vector<std::string> list_mem_types()
 {
   return mp11::mp_for_each<mem_types>(TypeName()).names;
 }
+
+// [[Rcpp::export]]
+std::vector<std::string> list_arma_types()
+{
+  return mp11::mp_for_each<arma_types>(TypeName()).names;
+}

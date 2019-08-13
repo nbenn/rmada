@@ -57,3 +57,7 @@ list_mem_types <- function() {
     .Call(`_rmada_list_mem_types`)
 }
 
+list_arma_types <- function() {
+    .Call(`_rmada_list_arma_types`)
+}
+

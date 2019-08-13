@@ -8,15 +8,16 @@ memory <- R6::R6Class(
   public = list(
 
     initialize = function(length, id = rand_name(mode = mem_type),
-                          data_type = 8L, mem_type = "SharedMemory") {
+                          data_type = "double", mem_type = "SharedMemory") {
 
       assert_that(is.count(length), is.string(id),
-                  is.count(data_type), is.string(mem_type))
+                  is.count(data_type) || is.string(data_type),
+                  is.count(mem_type) || is.string(mem_type))
 
       private$leng <- length
       private$name <- id
-      private$dtyp <- data_type
-      private$mtyp <- mem_type
+      private$dtyp <- resolve_type(data_type, list_num_types())
+      private$mtyp <- resolve_type(mem_type, list_mem_types())
 
       private$init_mem()
     },
@@ -97,6 +98,20 @@ memory <- R6::R6Class(
     finalize = function() mem_remove(self$mem_ptr)
   )
 )
+
+resolve_type <- function(type, type_list) {
+
+  assert_that(length(type) == 1L,
+              is.character(type_list), length(type_list) > 0L)
+
+  if (is.character(type)) {
+    type <- charmatch(type, type_list, nomatch = 0L)
+  }
+
+  assert_that(is.count(type), type <= length(type_list))
+
+  type - 1L
+}
 
 rand_name <- function(mode = "SharedMemory", length = 10L,
                       alphabet = c(LETTERS, letters, 0L:9L)) {

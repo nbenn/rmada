@@ -165,6 +165,16 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// list_arma_types
+std::vector<std::string> list_arma_types();
+RcppExport SEXP _rmada_list_arma_types() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    rcpp_result_gen = Rcpp::wrap(list_arma_types());
+    return rcpp_result_gen;
+END_RCPP
+}
 
 RcppExport SEXP run_testthat_tests();
 
@@ -183,6 +193,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_mem_resize", (DL_FUNC) &_rmada_mem_resize, 3},
     {"_rmada_list_num_types", (DL_FUNC) &_rmada_list_num_types, 0},
     {"_rmada_list_mem_types", (DL_FUNC) &_rmada_list_mem_types, 0},
+    {"_rmada_list_arma_types", (DL_FUNC) &_rmada_list_arma_types, 0},
     {"run_testthat_tests", (DL_FUNC) &run_testthat_tests, 0},
     {NULL, NULL, 0}
 };
