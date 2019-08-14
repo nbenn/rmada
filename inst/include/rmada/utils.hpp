@@ -13,10 +13,10 @@
 // You should have received a copy of the GNU General Public License along
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef UTILS_H_
-#define UTILS_H_
+#ifndef INST_INCLUDE_RMADA_UTILS_H_
+#define INST_INCLUDE_RMADA_UTILS_H_
 
-#include <Rcpp.h>
+#include <RcppArmadillo.h>
 
 template <typename T>
 Rcpp::XPtr<T> xptr(SEXP x)
@@ -24,4 +24,8 @@ Rcpp::XPtr<T> xptr(SEXP x)
   return Rcpp::XPtr<T>(x, R_ExternalPtrTag(x), R_ExternalPtrProtected(x));
 }
 
-#endif  // UTILS_H_
+Rcpp::IntegerVector create_tag(std::size_t = NA_INTEGER,
+    std::size_t = NA_INTEGER, std::size_t = NA_INTEGER);
+std::size_t get_tag_val(SEXP, std::string);
+
+#endif  // INST_INCLUDE_RMADA_UTILS_H_

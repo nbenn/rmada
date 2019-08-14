@@ -1,12 +1,11 @@
 
 mem_len <- 10L
 new_len <- 12L
-mem_id <- "shmem_test"
+mem_id <- "shmem_test_mem"
 data_type <- "int"
 mem_type <- "SharedMemory"
 
 shared_mem <- memory$new(mem_len, mem_id, data_type, mem_type)
-teardown(rm(shared_mem))
 
 test_that("shared memory object instantiation", {
   expect_is(shared_mem, "memory")
@@ -40,7 +39,6 @@ mem_id <- tempfile()
 mem_type <- "FileMemory"
 
 file_mem <- memory$new(mem_len, mem_id, data_type, mem_type)
-teardown(rm(file_mem))
 
 test_that("file backed memory object instantiation", {
   expect_is(file_mem, "memory")

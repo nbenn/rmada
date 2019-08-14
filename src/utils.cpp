@@ -43,3 +43,16 @@ std::vector<std::string> list_arma_types()
 {
   return mp11::mp_for_each<arma_types>(TypeName()).names;
 }
+
+Rcpp::IntegerVector create_tag(std::size_t arma_type, std::size_t num_type,
+    std::size_t mem_type)
+{
+  return Rcpp::IntegerVector::create(Rcpp::Named("arma_type", arma_type),
+      Rcpp::Named("num_type", num_type), Rcpp::Named("mem_type", mem_type));
+}
+
+std::size_t get_tag_val(SEXP x, std::string val_name)
+{
+  auto tag = Rcpp::as<Rcpp::NumericVector>(R_ExternalPtrTag(x));
+  return tag[val_name];
+}

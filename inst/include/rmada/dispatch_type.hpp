@@ -17,6 +17,7 @@
 #define INST_INCLUDE_RMADA_DISPATCH_TYPE_H_
 
 #include <rmada/mem.hpp>
+#include <rmada/utils.hpp>
 
 #include <RcppArmadillo.h>
 
@@ -135,7 +136,7 @@ auto dispatch_mem(SEXP x, Ar&&... rg) ->
       std::forward<SEXP>(x), std::forward<Ar>(rg)...
     ))
 {
-  auto type = Rcpp::as<std::size_t>(R_ExternalPtrTag(x));
+  auto type = get_tag_val(x, "num_type");
   return dispatch_num_type<Fn>(type, std::forward<SEXP>(x),
       std::forward<Ar>(rg)...);
 }
@@ -153,7 +154,7 @@ auto dispatch_arma_obj(SEXP x, Ar&&... rg) ->
       std::forward<SEXP>(x), std::forward<Ar>(rg)...
     ))
 {
-  auto type = Rcpp::as<std::size_t>(R_ExternalPtrTag(x));
+  auto type = get_tag_val(x, "arma_type");
   return dispatch_arma_type<Fn>(type, std::forward<SEXP>(x),
       std::forward<Ar>(rg)...);
 }

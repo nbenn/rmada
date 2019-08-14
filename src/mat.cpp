@@ -26,8 +26,9 @@ struct MatInit
     using arma_t = arma::Mat<T>;
     T* ptr = static_cast<T*>(mem->get_address());
     auto res = new arma_t(ptr, n_rows, n_cols, false, true);
-    auto ind = std::size_t{i_form_arma_type<arma_t>::value};
-    return Rcpp::XPtr<arma_t>(res, true, Rcpp::wrap(ind));
+    auto tag = create_tag(std::size_t{i_form_arma_type<arma_t>::value},
+        std::size_t{i_form_num_type<T>::value});
+    return Rcpp::XPtr<arma_t>(res, true, Rcpp::wrap(tag));
   }
 };
 
@@ -35,7 +36,7 @@ struct MatInit
 SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols,
     std::size_t data_type)
 {
-  if (data_type != Rcpp::as<std::size_t>(R_ExternalPtrTag(mem)))
+  if (data_type != get_tag_val(mem, "num_type"))
   {
     throw std::runtime_error("Data types do not match.");
   }
