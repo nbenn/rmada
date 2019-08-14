@@ -13,6 +13,14 @@ n_elem <- function(x) {
     .Call(`_rmada_n_elem`, x)
 }
 
+n_slices <- function(x) {
+    .Call(`_rmada_n_slices`, x)
+}
+
+n_nonzero <- function(x) {
+    .Call(`_rmada_n_nonzero`, x)
+}
+
 mat_init <- function(mem, n_rows, n_cols, data_type) {
     .Call(`_rmada_mat_init`, mem, n_rows, n_cols, data_type)
 }

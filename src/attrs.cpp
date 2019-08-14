@@ -60,3 +60,33 @@ arma::uword n_elem(SEXP x)
 {
   return dispatch_arma_obj<NElem>(x);
 }
+
+template <typename T>
+struct NSlices
+{
+  arma::uword operator()(SEXP x)
+  {
+    return xptr<arma::Cube<T>>(x)->n_slices;
+  }
+};
+
+// [[Rcpp::export]]
+arma::uword n_slices(SEXP x)
+{
+  return dispatch_num_obj<NSlices>(x);
+}
+
+template <typename T>
+struct NNonzero
+{
+  arma::uword operator()(SEXP x)
+  {
+    return xptr<arma::SpMat<T>>(x)->n_nonzero;
+  }
+};
+
+// [[Rcpp::export]]
+arma::uword n_nonzero(SEXP x)
+{
+  return dispatch_num_obj<NNonzero>(x);
+}

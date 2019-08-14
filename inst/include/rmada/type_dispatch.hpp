@@ -419,6 +419,17 @@ auto dispatch_num_type(std::size_t type, Ar&&... rg) ->
 }
 
 template <template<typename> class Fn, typename ...Ar>
+auto dispatch_num_obj(SEXP x, Ar&&... rg) ->
+    decltype(Fn<num_type_from_i<0>>()(
+      std::forward<SEXP>(x), std::forward<Ar>(rg)...
+    ))
+{
+  auto type = get_tag_val(x, "num_type");
+  return dispatch_num_type<Fn>(type, std::forward<SEXP>(x),
+      std::forward<Ar>(rg)...);
+}
+
+template <template<typename> class Fn, typename ...Ar>
 auto dispatch_mem(SEXP x, Ar&&... rg) ->
     decltype(Fn<num_type_from_i<0>>()(
       std::forward<SEXP>(x), std::forward<Ar>(rg)...

@@ -40,6 +40,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// n_slices
+arma::uword n_slices(SEXP x);
+RcppExport SEXP _rmada_n_slices(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(n_slices(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// n_nonzero
+arma::uword n_nonzero(SEXP x);
+RcppExport SEXP _rmada_n_nonzero(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(n_nonzero(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mat_init
 SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols, std::size_t data_type);
 RcppExport SEXP _rmada_mat_init(SEXP memSEXP, SEXP n_rowsSEXP, SEXP n_colsSEXP, SEXP data_typeSEXP) {
@@ -190,6 +212,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_n_rows", (DL_FUNC) &_rmada_n_rows, 1},
     {"_rmada_n_cols", (DL_FUNC) &_rmada_n_cols, 1},
     {"_rmada_n_elem", (DL_FUNC) &_rmada_n_elem, 1},
+    {"_rmada_n_slices", (DL_FUNC) &_rmada_n_slices, 1},
+    {"_rmada_n_nonzero", (DL_FUNC) &_rmada_n_nonzero, 1},
     {"_rmada_mat_init", (DL_FUNC) &_rmada_mat_init, 4},
     {"_rmada_mem_init", (DL_FUNC) &_rmada_mem_init, 4},
     {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},
