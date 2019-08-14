@@ -13,33 +13,50 @@
 // You should have received a copy of the GNU General Public License along
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include <rmada/mem.hpp>
 #include <rmada/dispatch_type.hpp>
 #include <rmada/utils.hpp>
 
 template <typename T>
-struct MatInit
+struct NRows
 {
-  SEXP operator()(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword
-      n_cols)
+  arma::uword operator()(SEXP x)
   {
-    using arma_t = arma::Mat<T>;
-    T* ptr = static_cast<T*>(mem->get_address());
-    auto res = new arma_t(ptr, n_rows, n_cols, false, true);
-    auto ind = std::size_t{i_form_arma_type<arma_t>::value};
-    return Rcpp::XPtr<arma_t>(res, true, Rcpp::wrap(ind));
+    return xptr<T>(x)->n_rows;
   }
 };
 
 // [[Rcpp::export]]
-SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols,
-    std::size_t data_type)
+arma::uword n_rows(SEXP x)
 {
-  if (data_type != Rcpp::as<std::size_t>(R_ExternalPtrTag(mem)))
-  {
-    throw std::runtime_error("Data types do not match.");
-  }
+  return dispatch_arma_obj<NRows>(x);
+}
 
-  return dispatch_num_type<MatInit>(data_type, Rcpp::XPtr<Memory>(mem),
-      n_rows, n_cols);
+template <typename T>
+struct NCols
+{
+  arma::uword operator()(SEXP x)
+  {
+    return xptr<T>(x)->n_cols;
+  }
+};
+
+// [[Rcpp::export]]
+arma::uword n_cols(SEXP x)
+{
+  return dispatch_arma_obj<NCols>(x);
+}
+
+template <typename T>
+struct NElem
+{
+  arma::uword operator()(SEXP x)
+  {
+    return xptr<T>(x)->n_elem;
+  }
+};
+
+// [[Rcpp::export]]
+arma::uword n_elem(SEXP x)
+{
+  return dispatch_arma_obj<NElem>(x);
 }
