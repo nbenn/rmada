@@ -13,10 +13,9 @@
 // You should have received a copy of the GNU General Public License along
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include <rmada/mem.h>
-#include <rmada/dispatch_type.h>
-
-#include "utils.h"
+#include <rmada/mem.hpp>
+#include <rmada/dispatch_type.hpp>
+#include <rmada/utils.hpp>
 
 template <typename T>
 struct MatInit

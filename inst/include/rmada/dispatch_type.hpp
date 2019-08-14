@@ -16,7 +16,7 @@
 #ifndef INST_INCLUDE_RMADA_DISPATCH_TYPE_H_
 #define INST_INCLUDE_RMADA_DISPATCH_TYPE_H_
 
-#include <rmada/mem.h>
+#include <rmada/mem.hpp>
 
 #include <RcppArmadillo.h>
 

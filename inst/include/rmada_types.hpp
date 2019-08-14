@@ -16,6 +16,6 @@
 #ifndef INST_INCLUDE_RMADA_TYPES_H_
 #define INST_INCLUDE_RMADA_TYPES_H_
 
-#include <rmada/mem.h>
+#include <rmada/mem.hpp>
 
 #endif  // INST_INCLUDE_RMADA_TYPES_H_

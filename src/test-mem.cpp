@@ -14,7 +14,7 @@
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <testthat.h>
-#include <rmada/mem.h>
+#include <rmada/mem.hpp>
 
 namespace bip = boost::interprocess;
 
