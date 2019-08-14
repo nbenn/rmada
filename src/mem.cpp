@@ -14,7 +14,7 @@
 // with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <rmada/mem.hpp>
-#include <rmada/dispatch_type.hpp>
+#include <rmada/type_dispatch.hpp>
 #include <rmada/utils.hpp>
 
 #include <cstdio>
