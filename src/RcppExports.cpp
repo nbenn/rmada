@@ -51,6 +51,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// fill_predefined
+void fill_predefined(SEXP x, std::size_t how);
+RcppExport SEXP _rmada_fill_predefined(SEXP xSEXP, SEXP howSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< std::size_t >::type how(howSEXP);
+    fill_predefined(x, how);
+    return R_NilValue;
+END_RCPP
+}
+// fill_value
+void fill_value(SEXP x, SEXP what);
+RcppExport SEXP _rmada_fill_value(SEXP xSEXP, SEXP whatSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type what(whatSEXP);
+    fill_value(x, what);
+    return R_NilValue;
+END_RCPP
+}
 // mat_init
 SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols, std::size_t data_type);
 RcppExport SEXP _rmada_mat_init(SEXP memSEXP, SEXP n_rowsSEXP, SEXP n_colsSEXP, SEXP data_typeSEXP) {
@@ -202,6 +224,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_n_cols", (DL_FUNC) &_rmada_n_cols, 1},
     {"_rmada_n_elem", (DL_FUNC) &_rmada_n_elem, 1},
     {"_rmada_n_slices", (DL_FUNC) &_rmada_n_slices, 1},
+    {"_rmada_fill_predefined", (DL_FUNC) &_rmada_fill_predefined, 2},
+    {"_rmada_fill_value", (DL_FUNC) &_rmada_fill_value, 2},
     {"_rmada_mat_init", (DL_FUNC) &_rmada_mat_init, 4},
     {"_rmada_mem_init", (DL_FUNC) &_rmada_mem_init, 4},
     {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},

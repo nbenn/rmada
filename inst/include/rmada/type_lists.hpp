@@ -78,4 +78,12 @@ using mem_type_from_i = mp11::mp_at_c<mem_types, I>;
 template <typename T>
 using i_form_mem_type = mp11::mp_find<mem_types, T>;
 
+template <typename T>
+using num_i_from_nested = mp11::mp_find<
+  num_types, mp11::mp_front<mp11::mp_rename<T, mp11::mp_list>>
+>;
+
+template <typename T>
+using num_type_from_nested = mp11::mp_at<num_types, num_i_from_nested<T>>;
+
 #endif  // INST_INCLUDE_RMADA_TYPE_LISTS_H_
