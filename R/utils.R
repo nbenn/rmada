@@ -27,3 +27,22 @@ rand_name <- function(mode = "SharedMemory", length = 10L,
     name
   }
 }
+
+is_number <- function(x) is.numeric(x) || is.complex(x)
+is_xptr <- function(x) inherits(x, "externalptr")
+
+fill_object <- function(x, how = 0) {
+
+  assert_that(length(how) == 1L)
+
+  if (how == 0 || how == "zeros")     fill_predefined(x, 0)
+  else if (how == 1 || how == "ones") fill_predefined(x, 1)
+  else if (how == "eye")              fill_predefined(x, 2)
+  else if (how == "randu")            fill_predefined(x, 3)
+  else if (how == "randn")            fill_predefined(x, 4)
+  else if (is_number(how))            fill_value(x, how)
+  else if (is_xptr(how))              fill_fun(x, how)
+  else                                stop("Cannot interpret how argument.")
+
+  invisible(NULL)
+}

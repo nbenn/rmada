@@ -18,7 +18,9 @@ mat <- R6::R6Class(
 
       super$initialize(n_rows * n_cols, ...)
       private$init_mat()
-    }
+    },
+
+    fill = function(how = 0) fill_object(self$mat_ptr, how)
   ),
 
   active = list(
