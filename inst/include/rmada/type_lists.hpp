@@ -48,8 +48,7 @@ using object_types = mp11::mp_list<
   arma::Mat<T>,
   arma::Col<T>,
   arma::Row<T>,
-  arma::Cube<T>,
-  arma::SpMat<T>
+  arma::Cube<T>
 >;
 
 using arma_types = mp11::mp_apply<
