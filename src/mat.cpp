@@ -20,11 +20,10 @@
 template <typename T>
 struct MatInit
 {
-  SEXP operator()(Rcpp::XPtr<Memory> mem, arma::uword n_rows, arma::uword
-      n_cols)
+  SEXP operator()(SEXP mem, arma::uword n_rows, arma::uword n_cols)
   {
     using arma_t = arma::Mat<T>;
-    T* ptr = static_cast<T*>(mem->get_address());
+    T* ptr = static_cast<T*>(xptr<Memory>(mem)->get_address());
     auto res = new arma_t(ptr, n_rows, n_cols, false, true);
     auto tag = create_tag(std::size_t{i_form_arma_type<arma_t>::value},
         std::size_t{i_form_num_type<T>::value});
@@ -41,6 +40,5 @@ SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols,
     throw std::runtime_error("Data types do not match.");
   }
 
-  return dispatch_num_type<MatInit>(data_type, Rcpp::XPtr<Memory>(mem),
-      n_rows, n_cols);
+  return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
 }
