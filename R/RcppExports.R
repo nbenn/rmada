@@ -25,6 +25,10 @@ fill_value <- function(x, what) {
     invisible(.Call(`_rmada_fill_value`, x, what))
 }
 
+fill_fun <- function(x, how) {
+    invisible(.Call(`_rmada_fill_fun`, x, how))
+}
+
 mat_init <- function(mem, n_rows, n_cols, data_type) {
     .Call(`_rmada_mat_init`, mem, n_rows, n_cols, data_type)
 }

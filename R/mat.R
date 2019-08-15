@@ -40,6 +40,13 @@ mat <- R6::R6Class(
     n_cols = function() {
       assert_that(private$ncol == n_cols(self$mat_ptr))
       private$ncol
+    },
+
+    n_elem = function() {
+      res <- private$ncol * private$nrow
+      assert_that(res == n_elem(self$mat_ptr),
+                  res == super$length)
+      res
     }
   ),
 
@@ -61,4 +68,9 @@ mat <- R6::R6Class(
 #' @export
 dim.mat <- function(x) {
   c(x$n_rows, x$n_cols)
+}
+
+#' @export
+length.mat <- function(x) {
+  x$n_elem
 }

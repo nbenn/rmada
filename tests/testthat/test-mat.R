@@ -14,4 +14,5 @@ test_that("matrix instantiation", {
   expect_is(sh_mat, "memory")
   expect_equal(nrow(sh_mat), nrow)
   expect_equal(ncol(sh_mat), ncol)
+  expect_equal(length(sh_mat), nrow * ncol)
 })

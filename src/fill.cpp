@@ -69,3 +69,21 @@ void fill_value(SEXP x, SEXP what)
 {
   dispatch_arma_obj<FillValue>(x, what);
 }
+
+template <typename T>
+struct FillFun
+{
+  void operator()(SEXP x, SEXP how)
+  {
+    typedef num_type_from_nested<T> (*funcPtr)();
+    Rcpp::XPtr<funcPtr> xpfun(how);
+    funcPtr fun = *xpfun;
+    xptr<T>(x)->imbue( [&]() { return fun(); } );
+  }
+};
+
+// [[Rcpp::export]]
+void fill_fun(SEXP x, SEXP how)
+{
+  dispatch_arma_obj<FillFun>(x, how);
+}
