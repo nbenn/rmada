@@ -42,3 +42,44 @@ SEXP mat_init(SEXP mem, arma::uword n_rows, arma::uword n_cols,
 
   return dispatch_num_type<MatInit>(data_type, mem, n_rows, n_cols);
 }
+
+template <typename T>
+struct MatSubset
+{
+  SEXP operator()(SEXP x, arma::uvec i, arma::uvec j)
+  {
+    arma::Mat<T> res = xptr<arma::Mat<T>>(x)->submat(i, j);
+    return Rcpp::wrap(res);
+  }
+};
+
+// [[Rcpp::export]]
+SEXP mat_subset(SEXP x, arma::uvec i, arma::uvec j)
+{
+  return dispatch_num_obj<MatSubset>(x, i - 1, j - 1);
+}
+
+template <typename T>
+struct subview_container
+{
+  T view;
+  subview_container(T subv): view(subv) {}
+};
+
+template <typename T>
+struct MatSubview
+{
+  SEXP operator()(SEXP x, arma::uvec i, arma::uvec j)
+  {
+    using subv_t = arma::subview_elem2<T, arma::umat, arma::umat>;
+    auto view = xptr<arma::Mat<T>>(x)->submat(i, j);
+    auto subv = new subview_container<subv_t>(view);
+    return Rcpp::XPtr<subview_container<subv_t>>(subv, true);
+  }
+};
+
+// [[Rcpp::export]]
+SEXP mat_subview(SEXP x, arma::uvec i, arma::uvec j)
+{
+  return dispatch_num_obj<MatSubview>(x, i - 1, j - 1);
+}

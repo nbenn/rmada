@@ -33,6 +33,14 @@ mat_init <- function(mem, n_rows, n_cols, data_type) {
     .Call(`_rmada_mat_init`, mem, n_rows, n_cols, data_type)
 }
 
+mat_subset <- function(x, i, j) {
+    .Call(`_rmada_mat_subset`, x, i, j)
+}
+
+mat_subview <- function(x, i, j) {
+    .Call(`_rmada_mat_subview`, x, i, j)
+}
+
 mem_init <- function(name, n_elem, data_type, mem_type) {
     .Call(`_rmada_mem_init`, name, n_elem, data_type, mem_type)
 }

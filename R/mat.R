@@ -20,7 +20,18 @@ mat <- R6::R6Class(
       private$init_mat()
     },
 
-    fill = function(how = 0) fill_object(self$mat_ptr, how)
+    fill = function(how = 0) {
+      fill_object(self$mat_ptr, how)
+      invisible(self)
+    },
+
+    subset = function(i, j) {
+      mat_subset(self$mat_ptr, i, j)
+    },
+
+    subview = function(i, j) {
+      mat_subview(self$mat_ptr, i, j)
+    }
   ),
 
   active = list(
@@ -68,11 +79,21 @@ mat <- R6::R6Class(
 )
 
 #' @export
-dim.mat <- function(x) {
+dim.mat <- function(x, ...) {
   c(x$n_rows, x$n_cols)
 }
 
 #' @export
-length.mat <- function(x) {
+length.mat <- function(x, ...) {
   x$n_elem
+}
+
+#' @export
+`[.mat` <- function(x, i, j, ...) {
+  x$subset(i, j)
+}
+
+#' @export
+`[[.mat` <- function(x, i, j, ...) {
+  x$subview(i, j)
 }

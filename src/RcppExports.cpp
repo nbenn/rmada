@@ -98,6 +98,32 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// mat_subset
+SEXP mat_subset(SEXP x, arma::uvec i, arma::uvec j);
+RcppExport SEXP _rmada_mat_subset(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_subset(x, i, j));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_subview
+SEXP mat_subview(SEXP x, arma::uvec i, arma::uvec j);
+RcppExport SEXP _rmada_mat_subview(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_subview(x, i, j));
+    return rcpp_result_gen;
+END_RCPP
+}
 // mem_init
 SEXP mem_init(std::string name, std::size_t n_elem, std::size_t data_type, std::size_t mem_type);
 RcppExport SEXP _rmada_mem_init(SEXP nameSEXP, SEXP n_elemSEXP, SEXP data_typeSEXP, SEXP mem_typeSEXP) {
@@ -239,6 +265,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_fill_value", (DL_FUNC) &_rmada_fill_value, 2},
     {"_rmada_fill_fun", (DL_FUNC) &_rmada_fill_fun, 2},
     {"_rmada_mat_init", (DL_FUNC) &_rmada_mat_init, 4},
+    {"_rmada_mat_subset", (DL_FUNC) &_rmada_mat_subset, 3},
+    {"_rmada_mat_subview", (DL_FUNC) &_rmada_mat_subview, 3},
     {"_rmada_mem_init", (DL_FUNC) &_rmada_mem_init, 4},
     {"_rmada_mem_attach", (DL_FUNC) &_rmada_mem_attach, 1},
     {"_rmada_mem_detach", (DL_FUNC) &_rmada_mem_detach, 1},
