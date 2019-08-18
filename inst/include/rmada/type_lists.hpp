@@ -31,8 +31,6 @@ using mem_types = mp11::mp_list<
 >;
 
 using num_types = mp11::mp_list<
-  std::complex<float>,
-  std::complex<double>,
   unsigned short,
   unsigned int,
   unsigned long,

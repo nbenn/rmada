@@ -51,6 +51,149 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// mat_extract_elem
+SEXP mat_extract_elem(SEXP x, arma::uword i, arma::uword j);
+RcppExport SEXP _rmada_mat_extract_elem(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_elem(x, i, j));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_col
+SEXP mat_extract_col(SEXP x, arma::uword j);
+RcppExport SEXP _rmada_mat_extract_col(SEXP xSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_col(x, j));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_subcol
+SEXP mat_extract_subcol(SEXP x, arma::uword j, arma::uword fist_row, arma::uword last_row);
+RcppExport SEXP _rmada_mat_extract_subcol(SEXP xSEXP, SEXP jSEXP, SEXP fist_rowSEXP, SEXP last_rowSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type j(jSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type fist_row(fist_rowSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last_row(last_rowSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_subcol(x, j, fist_row, last_row));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_row
+SEXP mat_extract_row(SEXP x, arma::uword i);
+RcppExport SEXP _rmada_mat_extract_row(SEXP xSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type i(iSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_row(x, i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_subrow
+SEXP mat_extract_subrow(SEXP x, arma::uword i, arma::uword first_col, arma::uword last_col);
+RcppExport SEXP _rmada_mat_extract_subrow(SEXP xSEXP, SEXP iSEXP, SEXP first_colSEXP, SEXP last_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type first_col(first_colSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last_col(last_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_subrow(x, i, first_col, last_col));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_cols
+SEXP mat_extract_cols(SEXP x, arma::uword first, arma::uword last);
+RcppExport SEXP _rmada_mat_extract_cols(SEXP xSEXP, SEXP firstSEXP, SEXP lastSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type first(firstSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last(lastSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_cols(x, first, last));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_nccols
+SEXP mat_extract_nccols(SEXP x, arma::uvec j);
+RcppExport SEXP _rmada_mat_extract_nccols(SEXP xSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_nccols(x, j));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_rows
+SEXP mat_extract_rows(SEXP x, arma::uword first, arma::uword last);
+RcppExport SEXP _rmada_mat_extract_rows(SEXP xSEXP, SEXP firstSEXP, SEXP lastSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type first(firstSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last(lastSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_rows(x, first, last));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_ncrows
+SEXP mat_extract_ncrows(SEXP x, arma::uvec i);
+RcppExport SEXP _rmada_mat_extract_ncrows(SEXP xSEXP, SEXP iSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type i(iSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_ncrows(x, i));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_submat
+SEXP mat_extract_submat(SEXP x, arma::uword i, arma::uword j, arma::uword last_row, arma::uword last_col);
+RcppExport SEXP _rmada_mat_extract_submat(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP, SEXP last_rowSEXP, SEXP last_colSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type j(jSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last_row(last_rowSEXP);
+    Rcpp::traits::input_parameter< arma::uword >::type last_col(last_colSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_submat(x, i, j, last_row, last_col));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mat_extract_ncsubmat
+SEXP mat_extract_ncsubmat(SEXP x, arma::uvec i, arma::uvec j);
+RcppExport SEXP _rmada_mat_extract_ncsubmat(SEXP xSEXP, SEXP iSEXP, SEXP jSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type i(iSEXP);
+    Rcpp::traits::input_parameter< arma::uvec >::type j(jSEXP);
+    rcpp_result_gen = Rcpp::wrap(mat_extract_ncsubmat(x, i, j));
+    return rcpp_result_gen;
+END_RCPP
+}
 // fill_predefined
 void fill_predefined(SEXP x, std::size_t how);
 RcppExport SEXP _rmada_fill_predefined(SEXP xSEXP, SEXP howSEXP) {
@@ -261,6 +404,17 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rmada_n_cols", (DL_FUNC) &_rmada_n_cols, 1},
     {"_rmada_n_elem", (DL_FUNC) &_rmada_n_elem, 1},
     {"_rmada_n_slices", (DL_FUNC) &_rmada_n_slices, 1},
+    {"_rmada_mat_extract_elem", (DL_FUNC) &_rmada_mat_extract_elem, 3},
+    {"_rmada_mat_extract_col", (DL_FUNC) &_rmada_mat_extract_col, 2},
+    {"_rmada_mat_extract_subcol", (DL_FUNC) &_rmada_mat_extract_subcol, 4},
+    {"_rmada_mat_extract_row", (DL_FUNC) &_rmada_mat_extract_row, 2},
+    {"_rmada_mat_extract_subrow", (DL_FUNC) &_rmada_mat_extract_subrow, 4},
+    {"_rmada_mat_extract_cols", (DL_FUNC) &_rmada_mat_extract_cols, 3},
+    {"_rmada_mat_extract_nccols", (DL_FUNC) &_rmada_mat_extract_nccols, 2},
+    {"_rmada_mat_extract_rows", (DL_FUNC) &_rmada_mat_extract_rows, 3},
+    {"_rmada_mat_extract_ncrows", (DL_FUNC) &_rmada_mat_extract_ncrows, 2},
+    {"_rmada_mat_extract_submat", (DL_FUNC) &_rmada_mat_extract_submat, 5},
+    {"_rmada_mat_extract_ncsubmat", (DL_FUNC) &_rmada_mat_extract_ncsubmat, 3},
     {"_rmada_fill_predefined", (DL_FUNC) &_rmada_fill_predefined, 2},
     {"_rmada_fill_value", (DL_FUNC) &_rmada_fill_value, 2},
     {"_rmada_fill_fun", (DL_FUNC) &_rmada_fill_fun, 2},

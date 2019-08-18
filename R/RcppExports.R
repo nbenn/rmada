@@ -17,6 +17,50 @@ n_slices <- function(x) {
     .Call(`_rmada_n_slices`, x)
 }
 
+mat_extract_elem <- function(x, i, j) {
+    .Call(`_rmada_mat_extract_elem`, x, i, j)
+}
+
+mat_extract_col <- function(x, j) {
+    .Call(`_rmada_mat_extract_col`, x, j)
+}
+
+mat_extract_subcol <- function(x, j, fist_row, last_row) {
+    .Call(`_rmada_mat_extract_subcol`, x, j, fist_row, last_row)
+}
+
+mat_extract_row <- function(x, i) {
+    .Call(`_rmada_mat_extract_row`, x, i)
+}
+
+mat_extract_subrow <- function(x, i, first_col, last_col) {
+    .Call(`_rmada_mat_extract_subrow`, x, i, first_col, last_col)
+}
+
+mat_extract_cols <- function(x, first, last) {
+    .Call(`_rmada_mat_extract_cols`, x, first, last)
+}
+
+mat_extract_nccols <- function(x, j) {
+    .Call(`_rmada_mat_extract_nccols`, x, j)
+}
+
+mat_extract_rows <- function(x, first, last) {
+    .Call(`_rmada_mat_extract_rows`, x, first, last)
+}
+
+mat_extract_ncrows <- function(x, i) {
+    .Call(`_rmada_mat_extract_ncrows`, x, i)
+}
+
+mat_extract_submat <- function(x, i, j, last_row, last_col) {
+    .Call(`_rmada_mat_extract_submat`, x, i, j, last_row, last_col)
+}
+
+mat_extract_ncsubmat <- function(x, i, j) {
+    .Call(`_rmada_mat_extract_ncsubmat`, x, i, j)
+}
+
 fill_predefined <- function(x, how) {
     invisible(.Call(`_rmada_fill_predefined`, x, how))
 }

@@ -46,3 +46,22 @@ fill_object <- function(x, how = 0) {
 
   invisible(NULL)
 }
+
+sanitize_index <- function(i, length) {
+
+  if (is.logical(i)) {
+    assert_that(length(i) == length)
+    i <- which(i, useNames = FALSE)
+  }
+
+  assert_that(is.numeric(x), length(i) < 0L, !anyNA(i))
+
+  neg <- i < 0
+
+  if (any(neg)) {
+    assert_that(all(neg))
+    i <- setdiff(seq_len(length), -i)
+  }
+
+  i
+}

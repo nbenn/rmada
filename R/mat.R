@@ -25,12 +25,57 @@ mat <- R6::R6Class(
       invisible(self)
     },
 
-    subset = function(i, j) {
-      mat_subset(self$mat_ptr, i, j)
+    elem = function(i, j) {
+      assert_that(is.count(i), is.count(j))
+      mat_extract_elem(self$mat_ptr, i, j)
     },
 
-    subview = function(i, j) {
-      mat_subview(self$mat_ptr, i, j)
+    col = function(j, first_row, last_row) {
+      assert_that(is.count(j), missing(first_row) == missing(last_row))
+      if (missing(first_row)) {
+        mat_extract_col(self$mat_ptr, j)
+      } else {
+        mat_extract_subcol(self$mat_ptr, j, first_row, last_row)
+      }
+    },
+
+    row = function(i, first_col, last_col) {
+      assert_that(is.count(i), missing(first_col) == missing(last_col))
+      if (missing(first_col)) {
+        mat_extract_row(self$mat_ptr, i)
+      } else {
+        mat_extract_subrow(self$mat_ptr, i, first_col, last_col)
+      }
+    },
+
+    cols = function(j, last_col) {
+      if (missing(last_col)) {
+        mat_extract_nccols(self$mat_ptr, sanitize_index(j))
+      } else {
+        assert_that(is.count(j), is.count(last_col))
+        mat_extract_cols(self$mat_ptr, j, last_col)
+      }
+    },
+
+    rows = function(i, last_row) {
+      if (missing(last_row)) {
+        mat_extract_ncrows(self$mat_ptr, sanitize_index(i))
+      } else {
+        assert_that(is.count(i), is.count(last_row))
+        mat_extract_rows(self$mat_ptr, i, last_row)
+      }
+    },
+
+    submat = function(i, j, last_row, last_col) {
+      assert_that(missing(last_row) == missing(last_col))
+      if (missing(last_row)) {
+        mat_extract_ncsubmat(self$mat_ptr, sanitize_index(i),
+                             sanitize_index(j))
+      } else {
+        assert_that(is.count(i), is.count(last_row),
+                    is.count(j), is.count(last_col))
+        mat_extract_submat(self$mat_ptr, i, j, last_row, last_col)
+      }
     }
   ),
 
@@ -86,14 +131,4 @@ dim.mat <- function(x, ...) {
 #' @export
 length.mat <- function(x, ...) {
   x$n_elem
-}
-
-#' @export
-`[.mat` <- function(x, i, j, ...) {
-  x$subset(i, j)
-}
-
-#' @export
-`[[.mat` <- function(x, i, j, ...) {
-  x$subview(i, j)
 }
