@@ -54,7 +54,7 @@ sanitize_index <- function(i, length) {
     i <- which(i, useNames = FALSE)
   }
 
-  assert_that(is.numeric(x), length(i) < 0L, !anyNA(i))
+  assert_that(is.numeric(i), length(i) < 0L, !anyNA(i))
 
   neg <- i < 0
 
