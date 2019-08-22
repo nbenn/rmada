@@ -23,11 +23,20 @@ struct FillPredefined
   {
     switch(how)
     {
-      case 0: xptr<T>(x)->zeros(); break;
-      case 1: xptr<T>(x)->ones(); break;
-      case 3: xptr<T>(x)->randu(); break;
-      case 4: xptr<T>(x)->randn(); break;
-      default: throw std::runtime_error("Unsupported fill type.");
+      case 0:
+        xptr<T>(x)->zeros();
+        break;
+      case 1:
+        xptr<T>(x)->ones();
+        break;
+      case 3:
+        xptr<T>(x)->randu();
+        break;
+      case 4:
+        xptr<T>(x)->randn();
+        break;
+      default:
+        throw std::runtime_error("Unsupported fill type.");
     }
   }
 };
@@ -50,7 +59,7 @@ void fill_predefined(SEXP x, std::size_t how)
   }
   else
   {
-    dispatch_arma_obj<FillPredefined>(x, how);    
+    dispatch_arma_obj<FillPredefined>(x, how);
   }
 }
 
