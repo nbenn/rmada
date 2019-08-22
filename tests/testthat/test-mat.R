@@ -16,3 +16,19 @@ test_that("matrix instantiation", {
   expect_equal(ncol(sh_mat), ncol)
   expect_equal(length(sh_mat), nrow * ncol)
 })
+
+test_that("value initialization", {
+  sh_mat$fill(0L)
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol), matrix(0L, nrow, ncol))
+  sh_mat$fill("zeros")
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol), matrix(0L, nrow, ncol))
+  sh_mat$fill(1L)
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol), matrix(1L, nrow, ncol))
+  sh_mat$fill("ones")
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol), matrix(1L, nrow, ncol))
+  sh_mat$fill(7L)
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol), matrix(7L, nrow, ncol))
+  sh_mat$fill("eye")
+  expect_equal(sh_mat$submat(1L, 1L, nrow, ncol),
+    rbind(diag(ncol), matrix(0L, nrow - ncol, ncol)))
+})
