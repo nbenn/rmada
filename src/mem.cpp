@@ -23,6 +23,8 @@
 #include <boost/system/error_code.hpp>
 
 #ifdef _WIN32
+#undef Realloc
+#undef Free
 #include <windows.h>
 #include <io.h>
 #endif
